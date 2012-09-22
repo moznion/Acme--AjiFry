@@ -121,6 +121,113 @@ sub encode_to_ajifry {
     return $ajifry_word;
 }
 
+sub decode_from_ajifry {
+    my $self        = shift;
+    my $ajifry_word = shift;
+    $ajifry_word = Encode::decode_utf8($ajifry_word);
+
+    my $decoded_word;
+    while (1) {
+        unless ($ajifry_word) {
+            last;
+        }
+
+        my $is_double_consonant = 0;
+        if ($ajifry_word =~ s/^京極//) {
+            $decoded_word .= 'ん';
+            next;
+        } elsif ($ajifry_word =~ s/^中川//) {
+            $is_double_consonant = 1;
+        }
+
+        my $consonant;
+        if ($ajifry_word  =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ああ|雄山)//) {
+            $consonant = $1;
+        } else {
+            $consonant = undef;
+        }
+        my $vowel;
+        if ($ajifry_word  =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|アジフライ)//) {
+            $vowel = $1;
+        } else {
+            $vowel = undef;
+        }
+        my $is_dullness;
+        if ($ajifry_word =~ s/^(陶人)//) {
+            $is_dullness  = $1;
+        } else {
+            $is_dullness = undef;
+        }
+        my $is_p_sound;
+        if ($ajifry_word =~ s/^(社主)//) {
+            $is_p_sound = $1;
+        } else {
+            $is_p_sound = undef;
+        }
+
+        if (!$consonant || !$vowel) {
+            $ajifry_word  =~ s/^(.)//;
+            $decoded_word .= $1;
+            next;
+        }
+
+        given ($consonant) {
+            when ('食え')       { $consonant = 'a' }
+            when ('フライ')     { $consonant = 'k' }
+            when ('お刺身')     { $consonant = 's' }
+            when ('アジ')       { $consonant = 't' }
+            when ('ドボ')       { $consonant = 'n' }
+            when ('山岡')       { $consonant = 'h' }
+            when ('岡星')       { $consonant = 'm' }
+            when ('ゴク・・・') { $consonant = 'y' }
+            when ('ああ')       { $consonant = 'r' }
+            when ('雄山')       { $consonant = 'w' }
+        }
+        given ($vowel) {
+            when ('食え食え')   { $vowel = 'a' }
+            when ('ドボドボ')   { $vowel = 'i' }
+            when ('お刺身')     { $vowel = 'u' }
+            when ('むむ・・・') { $vowel = 'e' }
+            when ('アジフライ') { $vowel = 'o' }
+        }
+        my @match_characters;
+        foreach my $consonant_char (@{$rows{$consonant}}) {
+            foreach my $vowel_char (@{$cols{$vowel}}) {
+                if ($consonant_char ~~ $vowel_char) {
+                    push(@match_characters, $consonant_char);
+                }
+            }
+        }
+
+        if ($is_p_sound) {
+            foreach my $match_char (@match_characters) {
+                if (List::Util::first {$_ eq $match_char} @p_sound) {
+                    $decoded_word .= $match_char;
+                }
+            }
+            next;
+        } elsif ($is_double_consonant) {
+            foreach my $match_char (@match_characters) {
+                if (List::Util::first {$_ eq $match_char} @double_consonant) {
+                    $decoded_word .= $match_char;
+                }
+            }
+            next;
+        } elsif ($is_dullness) {
+            foreach my $match_char (@match_characters) {
+                if (List::Util::first {$_ eq $match_char} @dullness) {
+                    $decoded_word .= $match_char;
+                }
+            }
+            next;
+        } else {
+            $decoded_word .= $match_characters[0];
+        }
+    }
+
+    return $decoded_word;
+}
+
 1;
 # Magic true value required at end of module
 __END__
