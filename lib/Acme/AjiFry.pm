@@ -10,32 +10,42 @@ use version; our $VERSION = '0.01';
 use utf8;
 use Encode;
 use List::Util;
+use Data::Dumper;
 use base 'Class::Accessor::Fast';
 
 __PACKAGE__->mk_accessors(qw//);
 
 our %cols;
 our %rows;
+our @dullness;
+our @p_sound;
+our @double_consonant;
 
 sub new {
     my $class = shift;
 
-    $cols{a} = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ'];
-    $cols{i} = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み',       'り'      ];
-    $cols{u} = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'を'];
-    $cols{e} = ['え', 'け', 'せ', 'て', 'ね', 'へ', 'め',       'れ'      ];
-    $cols{o} = ['お', 'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ'      ];
+    $cols{a} = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ', 'が', 'ざ', 'だ', 'ば', 'ぱ', 'ぁ',       'ゃ', 'ゎ'];
+    $cols{i} = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み',       'り'      , 'ぎ', 'じ', 'ぢ', 'び', 'ぴ', 'ぃ'];
+    $cols{u} = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る'      , 'ぐ', 'ず', 'づ', 'ぶ', 'ぷ', 'ぅ', 'っ', 'ゅ'];
+    $cols{e} = ['え', 'け', 'せ', 'て', 'ね', 'へ', 'め',       'れ'      , 'げ', 'ぜ', 'で', 'べ', 'ぺ', 'ぇ', ];
+    $cols{o} = ['お', 'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'を', 'ご', 'ぞ', 'ど', 'ぼ', 'ぽ', 'ぉ',       'ょ'];
+    $cols{n} = ['ん'];
 
-    $rows{a} = ['あ', 'い', 'う', 'え', 'お'];
-    $rows{k} = ['か', 'き', 'く', 'け', 'こ'];
-    $rows{s} = ['さ', 'し', 'す', 'せ', 'そ'];
-    $rows{t} = ['た', 'ち', 'つ', 'て', 'と'];
+    $rows{a} = ['あ', 'い', 'う', 'え', 'お', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ'];
+    $rows{k} = ['か', 'き', 'く', 'け', 'こ', 'が', 'ぎ', 'ぐ', 'げ', 'ご'];
+    $rows{s} = ['さ', 'し', 'す', 'せ', 'そ', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ'];
+    $rows{t} = ['た', 'ち', 'つ', 'て', 'と', 'だ', 'ぢ', 'づ', 'で', 'ど', 'っ'];
     $rows{n} = ['な', 'に', 'ぬ', 'ね', 'の'];
-    $rows{h} = ['は', 'ひ', 'ふ', 'へ', 'ほ'];
+    $rows{h} = ['は', 'ひ', 'ふ', 'へ', 'ほ', 'ば', 'び', 'ぶ', 'べ', 'ぼ', 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'];
     $rows{m} = ['ま', 'み', 'む', 'め', 'も'];
-    $rows{y} = ['や', 'ゆ', 'よ'];
+    $rows{y} = ['や', 'ゆ', 'よ', 'ゃ', 'ゅ', 'ょ'];
     $rows{r} = ['ら', 'り', 'る', 'れ', 'ろ'];
-    $rows{w} = ['わ', 'を'];
+    $rows{w} = ['わ', 'を', 'ゎ'];
+
+    @dullness         = ('が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
+                         'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ');
+    @p_sound          = ('ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ');
+    @double_consonant = ('ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ');
 
     my $self = $class->SUPER::new();
     return $self;
@@ -58,56 +68,41 @@ sub replacement{
     my $vowel     = $self->check_include_element($raw_char, %cols);
     my $consonant = $self->check_include_element($raw_char, %rows);
 
+    if (!$vowel && !$consonant) {
+        return $raw_char; # not HIRAGANA
+    }
+
     my $ajifry_nized_string;
+    if (List::Util::first {$_ eq $raw_char} @double_consonant) {
+        $ajifry_nized_string .= "中川";
+    }
     given ($consonant) {
-        when ('a') {
-            $ajifry_nized_string .= "食え";
-        }
-        when ('k') {
-            $ajifry_nized_string .= "フライ";
-        }
-        when ('s') {
-            $ajifry_nized_string .= "お刺身";
-        }
-        when ('t') {
-            $ajifry_nized_string .= "アジ";
-        }
-        when ('n') {
-            $ajifry_nized_string .= "ドボ";
-        }
-        when ('h') {
-            $ajifry_nized_string .= "山岡";
-        }
-        when ('m') {
-            $ajifry_nized_string .= "岡星";
-        }
-        when ('y') {
-            $ajifry_nized_string .= "ゴク…";
-        }
-        when ('r') {
-            $ajifry_nized_string .= "ああ";
-        }
-        when ('w') {
-            $ajifry_nized_string .= "雄山";
-        }
+        when ('a') { $ajifry_nized_string .= "食え" }
+        when ('k') { $ajifry_nized_string .= "フライ" }
+        when ('s') { $ajifry_nized_string .= "お刺身" }
+        when ('t') { $ajifry_nized_string .= "アジ" }
+        when ('n') { $ajifry_nized_string .= "ドボ" }
+        when ('h') { $ajifry_nized_string .= "山岡" }
+        when ('m') { $ajifry_nized_string .= "岡星" }
+        when ('y') { $ajifry_nized_string .= "ゴク・・・" }
+        when ('r') { $ajifry_nized_string .= "ああ" }
+        when ('w') { $ajifry_nized_string .= "雄山" }
     }
     given ($vowel) {
-        when ('a') {
-            $ajifry_nized_string .= "食え食え"
-        }
-        when ('i') {
-            $ajifry_nized_string .= "ドボドボ";
-        }
-        when ('u') {
-            $ajifry_nized_string .= "お刺身";
-        }
-        when ('e') {
-            $ajifry_nized_string .= "むむ…";
-        }
-        when ('o') {
-            $ajifry_nized_string .= "アジフライ";
-        }
+        when ('a') { $ajifry_nized_string .= "食え食え" }
+        when ('i') { $ajifry_nized_string .= "ドボドボ" }
+        when ('u') { $ajifry_nized_string .= "お刺身" }
+        when ('e') { $ajifry_nized_string .= "むむ・・・" }
+        when ('o') { $ajifry_nized_string .= "アジフライ" }
+        when ('n') { $ajifry_nized_string .= "京極" }
     }
+
+    if (List::Util::first {$_ eq $raw_char} @p_sound) {
+        $ajifry_nized_string .= "社主";
+    } elsif (List::Util::first {$_ eq $raw_char} @dullness) {
+        $ajifry_nized_string .= "陶人";
+    }
+
     return $ajifry_nized_string;
 }
 
