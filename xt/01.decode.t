@@ -25,4 +25,7 @@ is($got, "ぱりーぐ", Encode::encode_utf8("Decode: ぱりーぐ"));
 $got = Encode::decode_utf8($aji_fry->decode_from_ajifry("食え食え食えフライドボドボああ食え食え岡星むむ・・・アジ食え食えああ食え食えお刺身アジフライフライアジフライアジむむ・・・陶人お刺身ドボドボ食え食え食え食えドボドボお刺身ドボドボ中川ゴク・・・お刺身食えお刺身ああドボドボ中川ゴク・・・アジフライ食えお刺身アジ食え食え陶人ゴク・・・アジフライ"));
 is($got, "あきらめたらそこでしあいしゅうりょうだよ", Encode::encode_utf8("Decode: あきらめたらそこでしあいしゅうりょうだよ"));
 
+$got = Encode::decode_utf8($aji_fry->decode_from_ajifry("京極お刺身ドボドボ陶人中川ゴク・・・食え食え岡星むむ・・・ドボ食え食え"));
+is($got, "んじゃめな", Encode::encode_utf8("Decode: んじゃめな"));
+
 done_testing();
