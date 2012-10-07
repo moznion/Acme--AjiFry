@@ -3,7 +3,6 @@ package Acme::AjiFry;
 use 5.10.0;
 use warnings;
 use strict;
-use Carp;
 
 use version; our $VERSION = '0.01';
 
@@ -51,7 +50,7 @@ sub new {
     return $self;
 }
 
-sub check_include_element {
+sub search_key_of_element {
     my ($self, $element, %hash) = @_;
 
     foreach my $key (sort keys %hash) {
@@ -61,12 +60,12 @@ sub check_include_element {
     }
 }
 
-sub replacement{
+sub _encoder {
     my $self = shift;
     my $raw_char = shift;
 
-    my $vowel     = $self->check_include_element($raw_char, %cols);
-    my $consonant = $self->check_include_element($raw_char, %rows);
+    my $vowel     = $self->search_key_of_element($raw_char, %cols);
+    my $consonant = $self->search_key_of_element($raw_char, %rows);
 
     if (!$vowel && !$consonant) {
         return $raw_char; # not HIRAGANA
@@ -106,25 +105,9 @@ sub replacement{
     return $ajifry_nized_string;
 }
 
-sub encode_to_ajifry {
-    my $self       = shift;
-    my $raw_string = shift;
-    $raw_string = Encode::decode_utf8($raw_string);
-
-    my $ajifry_word;
-    my @chars = split //, $raw_string;
-    foreach my $char (@chars) {
-        $ajifry_word .= $self->replacement($char);
-    }
-
-    $ajifry_word = Encode::encode_utf8($ajifry_word);
-    return $ajifry_word;
-}
-
-sub decode_from_ajifry {
+sub _decoder {
     my $self        = shift;
     my $ajifry_word = shift;
-    $ajifry_word = Encode::decode_utf8($ajifry_word);
 
     my $decoded_word;
     while (1) {
@@ -228,6 +211,29 @@ sub decode_from_ajifry {
     return $decoded_word;
 }
 
+sub encode_to_ajifry {
+    my $self       = shift;
+    my $raw_string = shift;
+    $raw_string = Encode::decode_utf8($raw_string);
+
+    my $ajifry_word;
+    my @chars = split //, $raw_string;
+    foreach my $char (@chars) {
+        $ajifry_word .= $self->_encoder($char);
+    }
+
+    $ajifry_word = Encode::encode_utf8($ajifry_word);
+    return $ajifry_word;
+}
+
+sub decode_from_ajifry {
+    my $self        = shift;
+    my $ajifry_word = shift;
+    $ajifry_word = Encode::decode_utf8($ajifry_word);
+
+    return Encode::encode_utf8($self->_decoder($ajifry_word));
+}
+
 1;
 # Magic true value required at end of module
 __END__
@@ -259,7 +265,7 @@ Write a full description of the module and its features here.
 Use subsections (=head2, =head3) as appropriate.
 
 
-=head1 INTERFACE 
+=head1 INTERFACE
 
 =for author to fill in:
 Write a separate section listing the public components of the modules
@@ -307,75 +313,75 @@ Acme::AjiFry requires no configuration files or environment variables.
 
 =for author to fill in:
 A list of all the other modules that this module relies upon,
-  including any restrictions on versions, and an indication whether
-  the module is part of the standard Perl distribution, part of the
-  module's distribution, or must be installed separately. ]
+including any restrictions on versions, and an indication whether
+the module is part of the standard Perl distribution, part of the
+module's distribution, or must be installed separately. ]
 
-  None.
-
-
-  =head1 INCOMPATIBILITIES
-
-  =for author to fill in:
-  A list of any modules that this module cannot be used in conjunction
-  with. This may be due to name conflicts in the interface, or
-  competition for system or program resources, or due to internal
-  limitations of Perl (for example, many modules that use source code
-          filters are mutually incompatible).
-
-  None reported.
+None.
 
 
-  =head1 BUGS AND LIMITATIONS
+=head1 INCOMPATIBILITIES
 
-  =for author to fill in:
-  A list of known problems with the module, together with some
-  indication Whether they are likely to be fixed in an upcoming
-  release. Also a list of restrictions on the features the module
-  does provide: data types that cannot be handled, performance issues
-  and the circumstances in which they may arise, practical
-  limitations on the size of data sets, special cases that are not
-  (yet) handled, etc.
+=for author to fill in:
+A list of any modules that this module cannot be used in conjunction
+with. This may be due to name conflicts in the interface, or
+competition for system or program resources, or due to internal
+limitations of Perl (for example, many modules that use source code
+      filters are mutually incompatible).
 
-  No bugs have been reported.
-
-  Please report any bugs or feature requests to
-  C<bug-acme-ajifry@rt.cpan.org>, or through the web interface at
-  L<http://rt.cpan.org>.
+None reported.
 
 
-  =head1 AUTHOR
+=head1 BUGS AND LIMITATIONS
 
-  moznion  C<< <moznion@gmail.com> >>
+=for author to fill in:
+A list of known problems with the module, together with some
+indication Whether they are likely to be fixed in an upcoming
+release. Also a list of restrictions on the features the module
+does provide: data types that cannot be handled, performance issues
+and the circumstances in which they may arise, practical
+limitations on the size of data sets, special cases that are not
+(yet) handled, etc.
+
+No bugs have been reported.
+
+Please report any bugs or feature requests to
+C<bug-acme-ajifry@rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org>.
 
 
-  =head1 LICENCE AND COPYRIGHT
+=head1 AUTHOR
 
-  Copyright (c) 2012, moznion C<< <moznion@gmail.com> >>. All rights reserved.
-
-  This module is free software; you can redistribute it and/or
-  modify it under the same terms as Perl itself. See L<perlartistic>.
+moznion  C<< <moznion@gmail.com> >>
 
 
-  =head1 DISCLAIMER OF WARRANTY
+=head1 LICENCE AND COPYRIGHT
 
-  BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-  FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-  OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-  PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-  EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-  ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
-  YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
-  NECESSARY SERVICING, REPAIR, OR CORRECTION.
+Copyright (c) 2012, moznion C<< <moznion@gmail.com> >>. All rights reserved.
 
-  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-  WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-  REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
-  LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
-  OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
-  THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
-          RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-          FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-  SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-  SUCH DAMAGES.
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
+YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
+NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
+LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
+THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+      RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+      FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
