@@ -3,14 +3,12 @@ package Acme::AjiFry;
 use 5.10.0;
 use warnings;
 use strict;
-
-use version; our $VERSION = '0.01';
-
 use utf8;
 use Encode;
 use List::Util;
-use Data::Dumper;
 use base 'Class::Accessor::Fast';
+
+use version; our $VERSION = '0.01';
 
 __PACKAGE__->mk_accessors(qw//);
 
@@ -24,10 +22,10 @@ sub new {
     my $class = shift;
 
     $cols{a} = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ', 'が', 'ざ', 'だ', 'ば', 'ぱ', 'ぁ',       'ゃ', 'ゎ'];
-    $cols{i} = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み',       'り'      , 'ぎ', 'じ', 'ぢ', 'び', 'ぴ', 'ぃ'];
-    $cols{u} = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る'      , 'ぐ', 'ず', 'づ', 'ぶ', 'ぷ', 'ぅ', 'っ', 'ゅ'];
-    $cols{e} = ['え', 'け', 'せ', 'て', 'ね', 'へ', 'め',       'れ'      , 'げ', 'ぜ', 'で', 'べ', 'ぺ', 'ぇ', ];
-    $cols{o} = ['お', 'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'を', 'ご', 'ぞ', 'ど', 'ぼ', 'ぽ', 'ぉ',       'ょ'];
+    $cols{i} = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み',       'り'      , 'ぎ', 'じ', 'ぢ', 'び', 'ぴ', 'ぃ'                  ];
+    $cols{u} = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る'      , 'ぐ', 'ず', 'づ', 'ぶ', 'ぷ', 'ぅ', 'っ', 'ゅ'      ];
+    $cols{e} = ['え', 'け', 'せ', 'て', 'ね', 'へ', 'め',       'れ'      , 'げ', 'ぜ', 'で', 'べ', 'ぺ', 'ぇ',                 ];
+    $cols{o} = ['お', 'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'を', 'ご', 'ぞ', 'ど', 'ぼ', 'ぽ', 'ぉ',       'ょ'      ];
     $cols{n} = ['ん'];
 
     $rows{a} = ['あ', 'い', 'う', 'え', 'お', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ'];
@@ -50,7 +48,7 @@ sub new {
     return $self;
 }
 
-sub search_key_of_element {
+sub _search_key_of_element {
     my ($self, $element, %hash) = @_;
 
     foreach my $key (sort keys %hash) {
@@ -60,49 +58,102 @@ sub search_key_of_element {
     }
 }
 
-sub _encoder {
+sub _find_first {
     my $self = shift;
-    my $raw_char = shift;
+    my ($key, @list) = @_;
 
-    my $vowel     = $self->search_key_of_element($raw_char, %cols);
-    my $consonant = $self->search_key_of_element($raw_char, %rows);
+    return (List::Util::first {$_ eq $key} @list) ? 1 : 0;
+}
 
-    if (!$vowel && !$consonant) {
-        return $raw_char; # not HIRAGANA
-    }
+sub _get_ajifry_word_by_consonant {
+    my $self      = shift;
+    my $consonant = shift;
 
-    my $ajifry_nized_string;
-    if (List::Util::first {$_ eq $raw_char} @double_consonant) {
-        $ajifry_nized_string .= "中川";
-    }
     given ($consonant) {
-        when ('a') { $ajifry_nized_string .= "食え" }
-        when ('k') { $ajifry_nized_string .= "フライ" }
-        when ('s') { $ajifry_nized_string .= "お刺身" }
-        when ('t') { $ajifry_nized_string .= "アジ" }
-        when ('n') { $ajifry_nized_string .= "ドボ" }
-        when ('h') { $ajifry_nized_string .= "山岡" }
-        when ('m') { $ajifry_nized_string .= "岡星" }
-        when ('y') { $ajifry_nized_string .= "ゴク・・・" }
-        when ('r') { $ajifry_nized_string .= "ああ" }
-        when ('w') { $ajifry_nized_string .= "雄山" }
+        when ('a') { return "食え" }
+        when ('k') { return "フライ" }
+        when ('s') { return "お刺身" }
+        when ('t') { return "アジ" }
+        when ('n') { return "ドボ" }
+        when ('h') { return "山岡" }
+        when ('m') { return "岡星" }
+        when ('y') { return "ゴク・・・" }
+        when ('r') { return "ああ" }
+        when ('w') { return "雄山" }
+        default    { return "" }
     }
+}
+
+sub _get_ajifry_word_by_vowel {
+    my $self  = shift;
+    my $vowel = shift;
+
     given ($vowel) {
-        when ('a') { $ajifry_nized_string .= "食え食え" }
-        when ('i') { $ajifry_nized_string .= "ドボドボ" }
-        when ('u') { $ajifry_nized_string .= "お刺身" }
-        when ('e') { $ajifry_nized_string .= "むむ・・・" }
-        when ('o') { $ajifry_nized_string .= "アジフライ" }
-        when ('n') { $ajifry_nized_string .= "京極" }
+        when ('a') { return "食え食え" }
+        when ('i') { return "ドボドボ" }
+        when ('u') { return "お刺身" }
+        when ('e') { return "むむ・・・" }
+        when ('o') { return "アジフライ" }
+        when ('n') { return "京極" }
+        default    { return "" }
     }
+}
 
-    if (List::Util::first {$_ eq $raw_char} @p_sound) {
-        $ajifry_nized_string .= "社主";
-    } elsif (List::Util::first {$_ eq $raw_char} @dullness) {
-        $ajifry_nized_string .= "陶人";
+sub _get_consonant_by_ajifry_word {
+    my $self        = shift;
+    my $ajifry_word = shift;
+
+    given ($ajifry_word) {
+        when ('食え')       { return 'a' }
+        when ('フライ')     { return 'k' }
+        when ('お刺身')     { return 's' }
+        when ('アジ')       { return 't' }
+        when ('ドボ')       { return 'n' }
+        when ('山岡')       { return 'h' }
+        when ('岡星')       { return 'm' }
+        when ('ゴク・・・') { return 'y' }
+        when ('ああ')       { return 'r' }
+        when ('雄山')       { return 'w' }
+        default             { return undef }
     }
+}
 
-    return $ajifry_nized_string;
+sub _get_vowel_by_ajifry_word {
+    my $self        = shift;
+    my $ajifry_word = shift;
+
+    given ($ajifry_word) {
+        when ('食え食え')   { return 'a' }
+        when ('ドボドボ')   { return 'i' }
+        when ('お刺身')     { return 'u' }
+        when ('むむ・・・') { return 'e' }
+        when ('アジフライ') { return 'o' }
+        default             { return undef }
+    }
+}
+
+sub _encoder {
+    my $self       = shift;
+    my $raw_string = shift;
+
+    my @raw_chars = split //, $raw_string;
+    my $ajifry_word;
+    foreach my $raw_char (@raw_chars) {
+        my $vowel     = $self->_search_key_of_element($raw_char, %cols);
+        my $consonant = $self->_search_key_of_element($raw_char, %rows);
+
+        if (!$vowel && !$consonant) {
+            $ajifry_word .= $raw_char; # not HIRAGANA
+            next;
+        }
+
+        $ajifry_word .= "中川" if $self->_find_first($raw_char, @double_consonant);
+        $ajifry_word .= $self->_get_ajifry_word_by_consonant($consonant);
+        $ajifry_word .= $self->_get_ajifry_word_by_vowel($vowel);
+        $ajifry_word .= "社主" if $self->_find_first($raw_char, @p_sound);
+        $ajifry_word .= "陶人" if $self->_find_first($raw_char, @dullness);
+    }
+    return $ajifry_word;
 }
 
 sub _decoder {
@@ -126,7 +177,7 @@ sub _decoder {
         my $consonant = $1 if $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ああ|雄山)//;
         my $vowel     = $1 if $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|アジフライ)//;
 
-        if (!$consonant || !$vowel) {
+        if (!$consonant && !$vowel) {
             $ajifry_word  =~ s/^(.)//;
             $decoded_word .= $1;
             next;
@@ -135,25 +186,8 @@ sub _decoder {
         my $is_dullness = $1 if $ajifry_word =~ s/^(陶人)//;
         my $is_p_sound  = $1 if $ajifry_word =~ s/^(社主)//;
 
-        given ($consonant) {
-            when ('食え')       { $consonant = 'a' }
-            when ('フライ')     { $consonant = 'k' }
-            when ('お刺身')     { $consonant = 's' }
-            when ('アジ')       { $consonant = 't' }
-            when ('ドボ')       { $consonant = 'n' }
-            when ('山岡')       { $consonant = 'h' }
-            when ('岡星')       { $consonant = 'm' }
-            when ('ゴク・・・') { $consonant = 'y' }
-            when ('ああ')       { $consonant = 'r' }
-            when ('雄山')       { $consonant = 'w' }
-        }
-        given ($vowel) {
-            when ('食え食え')   { $vowel = 'a' }
-            when ('ドボドボ')   { $vowel = 'i' }
-            when ('お刺身')     { $vowel = 'u' }
-            when ('むむ・・・') { $vowel = 'e' }
-            when ('アジフライ') { $vowel = 'o' }
-        }
+        $consonant = $self->_get_consonant_by_ajifry_word($consonant);
+        $vowel     = $self->_get_vowel_by_ajifry_word($vowel);
 
         my @match_characters;
         foreach my $consonant_char (@{$rows{$consonant}}) {
@@ -185,14 +219,7 @@ sub encode_to_ajifry {
     my $raw_string = shift;
     $raw_string = Encode::decode_utf8($raw_string);
 
-    my $ajifry_word;
-    my @chars = split //, $raw_string;
-    foreach my $char (@chars) {
-        $ajifry_word .= $self->_encoder($char);
-    }
-
-    $ajifry_word = Encode::encode_utf8($ajifry_word);
-    return $ajifry_word;
+    return Encode::encode_utf8($self->_encoder($raw_string));
 }
 
 sub decode_from_ajifry {
@@ -202,8 +229,8 @@ sub decode_from_ajifry {
 
     return Encode::encode_utf8($self->_decoder($ajifry_word));
 }
-
 1;
+
 # Magic true value required at end of module
 __END__
 
