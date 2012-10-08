@@ -251,12 +251,12 @@ This document describes Acme::AjiFry version 0.0.1
 
 =head1 SYNOPSIS
 
-use Acme::AjiFry;
+    use Acme::AjiFry;
 
-my $ajifry = Acme::AjiFry->new();
+    my $ajifry = Acme::AjiFry->new();
 
-print $ajifry->translate_to_ajifry("おさしみ")."\n"; # outputs words translated from Japanese into AjiFry-Language => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
-print $ajifry->translate_from_ajifry("食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ")."\n"; # outputs words translated from AjiFry-Language into Japanese => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+    print $ajifry->translate_to_ajifry("おさしみ")."\n"; # outputs words translated from Japanese into AjiFry-Language => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+    print $ajifry->translate_from_ajifry("食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ")."\n"; # outputs words translated from AjiFry-Language into Japanese => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
 
 
 =head1 DESCRIPTION
