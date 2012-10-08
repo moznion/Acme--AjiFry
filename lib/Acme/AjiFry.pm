@@ -241,7 +241,7 @@ __END__
 
 =head1 NAME
 
-Acme::AjiFry - [One line description of module's purpose here]
+Acme::AjiFry - AjiFry Language (アジフライ語) Translater
 
 
 =head1 VERSION
@@ -253,85 +253,23 @@ This document describes Acme::AjiFry version 0.0.1
 
 use Acme::AjiFry;
 
-=for author to fill in:
-Brief code example(s) here showing commonest usage(s).
-This section will be as far as many users bother reading
-so make it as educational and exeplary as possible.
+my $ajifry = Acme::AjiFry->new();
+
+print $ajifry->translate_to_ajifry("おさしみ")."\n"; # outputs words translated from Japanese into AjiFry-Language => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+print $ajifry->translate_from_ajifry("食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ")."\n"; # outputs words translated from AjiFry-Language into Japanese => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
 
 
 =head1 DESCRIPTION
 
-=for author to fill in:
-Write a full description of the module and its features here.
-Use subsections (=head2, =head3) as appropriate.
-
-
-=head1 INTERFACE
-
-=for author to fill in:
-Write a separate section listing the public components of the modules
-interface. These normally consist of either subroutines that may be
-exported, or methods that may be called on objects belonging to the
-classes provided by the module.
-
-
-=head1 DIAGNOSTICS
-
-=for author to fill in:
-List every single error and warning message that the module can
-generate (even the ones that will "never happen"), with a full
-explanation of each problem, one or more likely causes, and any
-suggested remedies.
-
-=over
-
-=item C<< Error message here, perhaps with %s placeholders >>
-
-[Description of error here]
-
-=item C<< Another error message here >>
-
-[Description of error here]
-
-[Et cetera, et cetera]
-
-=back
-
-
-=head1 CONFIGURATION AND ENVIRONMENT
-
-=for author to fill in:
-A full explanation of any configuration system(s) used by the
-module, including the names and locations of any configuration
-files, and the meaning of any environment variables or properties
-that can be set. These descriptions must also include details of any
-configuration language used.
-
-Acme::AjiFry requires no configuration files or environment variables.
+Acme::AjiFry is the AjiFry-Language translator.
+This module can translate Japanese into AjiFry-Language, and vice versa.
+If you would like to know about AjiFry-Language, please refer to the folowing web site (Japanese Web Site).
+L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4%E8%AA%9E>
 
 
 =head1 DEPENDENCIES
 
-=for author to fill in:
-A list of all the other modules that this module relies upon,
-including any restrictions on versions, and an indication whether
-the module is part of the standard Perl distribution, part of the
-module's distribution, or must be installed separately. ]
-
-None.
-
-
-=head1 INCOMPATIBILITIES
-
-=for author to fill in:
-A list of any modules that this module cannot be used in conjunction
-with. This may be due to name conflicts in the interface, or
-competition for system or program resources, or due to internal
-limitations of Perl (for example, many modules that use source code
-      filters are mutually incompatible).
-
-None reported.
-
+Perl 5.10.0 or later.
 
 =head1 BUGS AND LIMITATIONS
 
@@ -353,12 +291,12 @@ L<http://rt.cpan.org>.
 
 =head1 AUTHOR
 
-moznion  C<< <moznion@gmail.com> >>
+moznion  C<< <moznion[at]gmail.com> >>
 
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2012, moznion C<< <moznion@gmail.com> >>. All rights reserved.
+Copyright (c) 2012, moznion C<< <moznion[at]gmail.com> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
