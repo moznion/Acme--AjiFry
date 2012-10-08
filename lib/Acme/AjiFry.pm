@@ -1,16 +1,15 @@
 package Acme::AjiFry;
 
-use 5.10.0;
 use warnings;
 use strict;
 use utf8;
+use feature qw(switch);
+
 use Encode;
 use List::Util;
 use base 'Class::Accessor::Fast';
 
 use version; our $VERSION = '0.01';
-
-__PACKAGE__->mk_accessors(qw//);
 
 our %cols;
 our %rows;
@@ -147,7 +146,7 @@ sub _get_vowel_by_ajifry_word {
     }
 }
 
-sub _encoder {
+sub _to_ajifry {
     my $self       = shift;
     my $raw_string = shift;
 
@@ -171,11 +170,11 @@ sub _encoder {
     return $ajifry_word;
 }
 
-sub _decoder {
+sub _from_ajifry {
     my $self        = shift;
     my $ajifry_word = shift;
 
-    my $decoded_word;
+    my $translated_word;
     while (1) {
         unless ($ajifry_word) {
             last;
@@ -183,7 +182,7 @@ sub _decoder {
 
         my $is_double_consonant = 0;
         if ($ajifry_word =~ s/^京極//) {
-            $decoded_word .= 'ん';
+            $translated_word .= 'ん';
             next;
         } elsif ($ajifry_word =~ s/^中川//) {
             $is_double_consonant = 1;
@@ -194,7 +193,7 @@ sub _decoder {
 
         if (!$consonant && !$vowel) {
             $ajifry_word  =~ s/^(.)//;
-            $decoded_word .= $1;
+            $translated_word .= $1;
             next;
         }
 
@@ -206,39 +205,38 @@ sub _decoder {
 
         my @match_characters = $self->_find_duplicate_element_in_both_lists($rows{$consonant}, $cols{$vowel});
         if ($is_p_sound) {
-            $decoded_word .= $match_characters[2];
+            $translated_word .= $match_characters[2];
         } elsif ($is_dullness) {
-            $decoded_word .= $match_characters[1];
+            $translated_word .= $match_characters[1];
         } elsif ($is_double_consonant && $consonant ~~ 't') {
-            $decoded_word .= $match_characters[2];
+            $translated_word .= $match_characters[2];
         } elsif ($is_double_consonant) {
-            $decoded_word .= $match_characters[1];
+            $translated_word .= $match_characters[1];
         } else {
-            $decoded_word .= $match_characters[0];
+            $translated_word .= $match_characters[0];
         }
     }
 
-    return $decoded_word;
+    return $translated_word;
 }
 
-sub encode_to_ajifry {
+sub translate_to_ajifry {
     my $self       = shift;
     my $raw_string = shift;
     $raw_string = Encode::decode_utf8($raw_string);
 
-    return Encode::encode_utf8($self->_encoder($raw_string));
+    return Encode::encode_utf8($self->_to_ajifry($raw_string));
 }
 
-sub decode_from_ajifry {
+sub translate_from_ajifry {
     my $self        = shift;
     my $ajifry_word = shift;
     $ajifry_word = Encode::decode_utf8($ajifry_word);
 
-    return Encode::encode_utf8($self->_decoder($ajifry_word));
+    return Encode::encode_utf8($self->_from_ajifry($ajifry_word));
 }
 1;
 
-# Magic true value required at end of module
 __END__
 
 =head1 NAME
