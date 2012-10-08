@@ -126,6 +126,8 @@ sub _get_consonant_by_ajifry_word {
         when ('山岡')       { return 'h' }
         when ('岡星')       { return 'm' }
         when ('ゴク・・・') { return 'y' }
+        when ('ゴク･･･')    { return 'y' }
+        when ('ゴク…')      { return 'y' }
         when ('ああ')       { return 'r' }
         when ('雄山')       { return 'w' }
         default             { return undef }
@@ -141,6 +143,8 @@ sub _get_vowel_by_ajifry_word {
         when ('ドボドボ')   { return 'i' }
         when ('お刺身')     { return 'u' }
         when ('むむ・・・') { return 'e' }
+        when ('むむ･･･')    { return 'e' }
+        when ('むむ…')      { return 'e' }
         when ('アジフライ') { return 'o' }
         default             { return undef }
     }
