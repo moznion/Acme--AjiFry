@@ -65,6 +65,21 @@ sub _find_first {
     return (List::Util::first {$_ eq $key} @list) ? 1 : 0;
 }
 
+sub _find_duplicate_element_in_both_lists {
+    my $self = shift;
+    my ($list_A, $list_B) = @_;
+
+    my @duplicate_elements;
+    foreach my $element_A (@{$list_A}) {
+        foreach my $element_B (@{$list_B}) {
+            if ($element_A ~~ $element_B) {
+                push(@duplicate_elements, $element_A);
+            }
+        }
+    }
+    return @duplicate_elements;
+}
+
 sub _get_ajifry_word_by_consonant {
     my $self      = shift;
     my $consonant = shift;
@@ -189,15 +204,7 @@ sub _decoder {
         $consonant = $self->_get_consonant_by_ajifry_word($consonant);
         $vowel     = $self->_get_vowel_by_ajifry_word($vowel);
 
-        my @match_characters;
-        foreach my $consonant_char (@{$rows{$consonant}}) {
-            foreach my $vowel_char (@{$cols{$vowel}}) {
-                if ($consonant_char ~~ $vowel_char) {
-                    push(@match_characters, $consonant_char);
-                }
-            }
-        }
-
+        my @match_characters = $self->_find_duplicate_element_in_both_lists($rows{$consonant}, $cols{$vowel});
         if ($is_p_sound) {
             $decoded_word .= $match_characters[2];
         } elsif ($is_dullness) {
