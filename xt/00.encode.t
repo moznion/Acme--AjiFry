@@ -19,9 +19,6 @@ my $aji_fry = Acme::AjiFry->new();
 $got = Encode::decode_utf8($aji_fry->encode_to_ajifry("おさしみ"));
 is($got, "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ", Encode::encode_utf8("Encode: おさしみ"));
 
-$got = Encode::decode_utf8($aji_fry->encode_to_ajifry("やまおか"));
-is($got, "ゴク・・・食え食え岡星食え食え食えアジフライフライ食え食え", Encode::encode_utf8("Encode: やまおか"));
-
 $got = Encode::decode_utf8($aji_fry->encode_to_ajifry("あきらめたらそこでしあいしゅうりょうだよ"));
 is($got, "食え食え食えフライドボドボああ食え食え岡星むむ・・・アジ食え食えああ食え食えお刺身アジフライフライアジフライアジむむ・・・陶人お刺身ドボドボ食え食え食え食えドボドボお刺身ドボドボ中川ゴク・・・お刺身食えお刺身ああドボドボ中川ゴク・・・アジフライ食えお刺身アジ食え食え陶人ゴク・・・アジフライ", Encode::encode_utf8("Encode: あきらめたらそこでしあいしゅうりょうだよ"));
 
