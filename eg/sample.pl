@@ -8,6 +8,7 @@ use FindBin;
 use lib ("$FindBin::Bin/../lib");
 use Acme::AjiFry;
 
-my $aji_fry = Acme::AjiFry->new();
+my $ajifry = Acme::AjiFry->new();
 
-print $aji_fry->encode_to_ajifry("おさしみ") . "\n";
+print $ajifry->translate_to_ajifry("おさしみ")."\n";
+print $ajifry->translate_from_ajifry("食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ")."\n";
