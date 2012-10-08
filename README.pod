@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 NAME
 
 Acme::AjiFry - AjiFry Language (アジフライ語) Translater
@@ -15,14 +17,18 @@ use Acme::AjiFry;
 my $ajifry = Acme::AjiFry->new();
 
 print $ajifry->translate_to_ajifry("おさしみ")."\n"; # outputs words translated from Japanese into AjiFry-Language => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+
 print $ajifry->translate_from_ajifry("食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ")."\n"; # outputs words translated from AjiFry-Language into Japanese => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
 
 
 =head1 DESCRIPTION
 
 Acme::AjiFry is the AjiFry-Language translator.
+
 This module can translate Japanese into AjiFry-Language, and vice versa.
+
 If you would like to know about AjiFry-Language, please refer to the folowing web site (Japanese Web Site).
+
 L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4%E8%AA%9E>
 
 
