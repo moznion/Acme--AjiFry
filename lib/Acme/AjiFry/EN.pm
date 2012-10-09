@@ -115,52 +115,25 @@ __END__
 
 =head1 NAME
 
-Acme::AjiFry - AjiFry Language (アジフライ語) Translater
-
-
-=head1 VERSION
-
-This document describes Acme::AjiFry version 0.0.1
-
+Acme::AjiFry::EN - AjiFry Language Translater for English
 
 =head1 SYNOPSIS
 
-    use Acme::AjiFry;
+    use Acme::AjiFry::EN;
 
-    my $ajifry = Acme::AjiFry->new();
+    my $ajifry_en = Acme::AjiFry::EN->new();
 
-    print $ajifry->translate_to_ajifry("おさしみ")."\n"; # outputs words translated from Japanese into AjiFry-Language => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
-    print $ajifry->translate_from_ajifry("食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ")."\n"; # outputs words translated from AjiFry-Language into Japanese => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+    print $ajifry_en->translate_to_ajifry('012abcABC!!!')."\n"; # outputs => '京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!'
+    print $ajifry_en->translate_from_ajifry('京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!')."\n"; # outputs => '012abcABC!!!'
 
 
 =head1 DESCRIPTION
 
-Acme::AjiFry is the AjiFry-Language translator.
-This module can translate Japanese into AjiFry-Language, and vice versa.
-If you would like to know about AjiFry-Language, please refer to the folowing web site (Japanese Web Site).
-L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4%E8%AA%9E>
+Acme::AjiFry::EN is the AjiFry-Language translator.
+This module can translate English into AjiFry-Language, and vice versa.
 
-
-=head1 DEPENDENCIES
-
-Perl 5.10.0 or later.
-
-=head1 BUGS AND LIMITATIONS
-
-=for author to fill in:
-A list of known problems with the module, together with some
-indication Whether they are likely to be fixed in an upcoming
-release. Also a list of restrictions on the features the module
-does provide: data types that cannot be handled, performance issues
-and the circumstances in which they may arise, practical
-limitations on the size of data sets, special cases that are not
-(yet) handled, etc.
-
-No bugs have been reported.
-
-Please report any bugs or feature requests to
-C<bug-acme-ajifry@rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org>.
+=head1 SEE ALSO
+L<Acme::AjiFry>.
 
 
 =head1 AUTHOR
