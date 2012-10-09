@@ -192,13 +192,13 @@ sub _from_ajifry {
             $is_double_consonant = 1;
         }
 
-        my $consonant = $1 if $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ああ|雄山)//;
+        my $consonant = $1 if $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ゴク･･･|ゴク…|ああ|雄山)//;
         unless ($consonant) {
             $ajifry_word  =~ s/^(.)//;
             $translated_word .= $1;
             next;
         }
-        my $vowel     = $1 if $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|アジフライ)//;
+        my $vowel     = $1 if $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|むむ･･･|むむ…|アジフライ)//;
         unless ($vowel) {
             $translated_word .= $consonant;
             $ajifry_word  =~ s/^(.)//;
