@@ -91,7 +91,7 @@ sub _get_ajifry_word_by_consonant {
         when ('n') { return "ドボ" }
         when ('h') { return "山岡" }
         when ('m') { return "岡星" }
-        when ('y') { return "ゴク・・・" }
+        when ('y') { return "ゴク･･･" }
         when ('r') { return "ああ" }
         when ('w') { return "雄山" }
         default    { return "" }
@@ -106,7 +106,7 @@ sub _get_ajifry_word_by_vowel {
         when ('a') { return "食え食え" }
         when ('i') { return "ドボドボ" }
         when ('u') { return "お刺身" }
-        when ('e') { return "むむ・・・" }
+        when ('e') { return "むむ･･･" }
         when ('o') { return "アジフライ" }
         when ('n') { return "京極" }
         default    { return "" }
