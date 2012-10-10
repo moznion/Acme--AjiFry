@@ -279,6 +279,22 @@ This module can translate Japanese into AjiFry-Language, and vice versa.
 If you would like to know about AjiFry-Language, please refer to the folowing web site (Japanese Web Site).
 L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4%E8%AA%9E>
 
+=head1 METHODS
+
+=over
+
+=item new
+new is the constructor of this module.
+
+=item translate_from_ajifry
+This module needs a AjiFry-Language string as parameter.
+It returns Japanese which was translated from AjiFry-Language.
+
+=item translate_to_ajifry
+This module needs a string as parameter.
+It returns AjiFru-Language which was translated from Japanese.
+
+=back
 
 =head1 DEPENDENCIES
 
