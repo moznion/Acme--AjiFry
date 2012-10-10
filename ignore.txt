@@ -10,3 +10,6 @@ pm_to_blib*
 cover_db
 pod2htm*.tmp
 Acme-AjiFry-*
+pod.t
+pod-coverage.t
+perlcritic.t
