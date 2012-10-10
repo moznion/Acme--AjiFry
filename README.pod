@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Acme::AjiFry (Acme::AjiFry::EN) - AjiFry Language (アジフライ語) Translater
+Acme::AjiFry (Acme::AjiFry::EN) - AjiFry Language (アジフライ語) Translator
 
 
 =head1 VERSION

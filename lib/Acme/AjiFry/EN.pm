@@ -115,7 +115,7 @@ __END__
 
 =head1 NAME
 
-Acme::AjiFry::EN - AjiFry Language Translater for English
+Acme::AjiFry::EN - AjiFry Language Translator for English
 
 =head1 SYNOPSIS
 
