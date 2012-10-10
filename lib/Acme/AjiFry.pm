@@ -130,7 +130,7 @@ sub _get_consonant_by_ajifry_word {
         when ('ゴク…')      { return 'y' }
         when ('ああ')       { return 'r' }
         when ('雄山')       { return 'w' }
-        default             { return undef }
+        default             { return }
     }
 }
 
@@ -146,7 +146,7 @@ sub _get_vowel_by_ajifry_word {
         when ('むむ･･･')    { return 'e' }
         when ('むむ…')      { return 'e' }
         when ('アジフライ') { return 'o' }
-        default             { return undef }
+        default             { return }
     }
 }
 
@@ -192,13 +192,15 @@ sub _from_ajifry {
             $is_double_consonant = 1;
         }
 
-        my $consonant = $1 if $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ゴク･･･|ゴク…|ああ|雄山)//;
+        my $consonant;
+        $consonant = $1 if $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ゴク･･･|ゴク…|ああ|雄山)//;
         unless ($consonant) {
             $ajifry_word  =~ s/^(.)//;
             $translated_word .= $1;
             next;
         }
-        my $vowel     = $1 if $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|むむ･･･|むむ…|アジフライ)//;
+        my $vowel;
+        $vowel     = $1 if $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|むむ･･･|むむ…|アジフライ)//;
         unless ($vowel) {
             $translated_word .= $consonant;
             $ajifry_word  =~ s/^(.)//;
@@ -206,8 +208,10 @@ sub _from_ajifry {
             next;
         }
 
-        my $is_dullness = $1 if $ajifry_word =~ s/^(陶人)//;
-        my $is_p_sound  = $1 if $ajifry_word =~ s/^(社主)//;
+        my $is_dullness;
+        $is_dullness = $1 if $ajifry_word =~ s/^(陶人)//;
+        my $is_p_sound;
+        $is_p_sound  = $1 if $ajifry_word =~ s/^(社主)//;
 
         $consonant = $self->_get_consonant_by_ajifry_word($consonant);
         $vowel     = $self->_get_vowel_by_ajifry_word($vowel);
