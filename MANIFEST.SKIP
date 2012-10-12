@@ -1,0 +1,17 @@
+~$
+\.bak$
+^.gitignore$
+.git/
+blib/
+pm_to_blib
+^\.prove$
+^ignore\.txt$
+^Makefile$
+^MANIFEST\.
+\.tar\.gz
+\.lwpcookies
+^ignore.txt$
+^README.pod$
+^t/perlcritic.t$
+^t/pod-coverage.t$
+^t/pod.t$

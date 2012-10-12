@@ -13,3 +13,4 @@ Acme-AjiFry-*
 pod.t
 pod-coverage.t
 perlcritic.t
+xt*
