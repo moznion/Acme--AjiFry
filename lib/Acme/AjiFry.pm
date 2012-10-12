@@ -337,6 +337,7 @@ It returns AjiFry-Language which was translated from Japanese.
 =head1 DEPENDENCIES
 
 Perl 5.10.0 or later.
+Class::Accessor::Fast 0.34 or later.
 
 =head1 BUGS AND LIMITATIONS
 
