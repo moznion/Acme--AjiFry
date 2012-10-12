@@ -16,3 +16,4 @@ pm_to_blib
 ^t/pod-coverage.t$
 ^t/pod.t$
 .shipit
+^Build.PL$
