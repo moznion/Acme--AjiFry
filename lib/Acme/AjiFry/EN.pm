@@ -14,28 +14,68 @@ our %map;
 sub new {
     my $class = shift;
 
-    $map{a} = '食え食え食え';      $map{b} = '食えドボドボ';   $map{c} = '食えお刺身';
-    $map{d} = '食えむむ･･･';       $map{e} = '食えアジフライ'; $map{f} = 'フライ食え食え';
-    $map{g} = 'フライドボドボ';    $map{h} = 'フライお刺身';   $map{i} = 'フライむむ･･･';
-    $map{j} = 'フライアジフライ';  $map{k} = 'お刺身食え食え'; $map{l} = 'お刺身ドボドボ';
-    $map{m} = 'お刺身お刺身';      $map{n} = 'お刺身むむ･･･';  $map{o} = 'お刺身アジフライ';
-    $map{p} = 'アジ食え食え';      $map{q} = 'アジドボドボ';   $map{r} = 'アジお刺身';
-    $map{s} = 'アジむむ･･･';       $map{t} = 'アジアジフライ'; $map{u} = 'ドボ食え食え';
-    $map{v} = 'ドボドボドボ';      $map{w} = 'ドボお刺身';     $map{x} = 'ドボむむ･･･';
-    $map{y} = 'ドボアジフライ';    $map{z} = '山岡食え食え';   $map{A} = '山岡ドボドボ';
-    $map{B} = '山岡お刺身';        $map{C} = '山岡むむ･･･';    $map{D} = '山岡アジフライ';
-    $map{E} = '岡星食え食え';      $map{F} = '岡星ドボドボ';   $map{G} = '岡星お刺身';
-    $map{H} = '岡星むむ･･･';       $map{I} = '岡星アジフライ'; $map{J} = 'ゴク･･･食え食え';
-    $map{K} = 'ゴク･･･ドボドボ';   $map{L} = 'ゴク･･･お刺身';  $map{M} = 'ゴク･･･むむ･･･';
-    $map{N} = 'ゴク･･･アジフライ'; $map{O} = 'ああ食え食え';   $map{P} = 'ああドボドボ';
-    $map{Q} = 'ああお刺身';        $map{R} = 'ああむむ･･･';    $map{S} = 'ああアジフライ';
-    $map{T} = '雄山食え食え';      $map{U} = '雄山ドボドボ';   $map{V} = '雄山お刺身';
-    $map{W} = '雄山むむ･･･';       $map{X} = '雄山アジフライ'; $map{Y} = '京極食え食え';
+    $map{a} = '食え食え食え';
+    $map{b} = '食えドボドボ';
+    $map{c} = '食えお刺身';
+    $map{d} = '食えむむ･･･';
+    $map{e} = '食えアジフライ';
+    $map{f} = 'フライ食え食え';
+    $map{g} = 'フライドボドボ';
+    $map{h} = 'フライお刺身';
+    $map{i} = 'フライむむ･･･';
+    $map{j} = 'フライアジフライ';
+    $map{k} = 'お刺身食え食え';
+    $map{l} = 'お刺身ドボドボ';
+    $map{m} = 'お刺身お刺身';
+    $map{n} = 'お刺身むむ･･･';
+    $map{o} = 'お刺身アジフライ';
+    $map{p} = 'アジ食え食え';
+    $map{q} = 'アジドボドボ';
+    $map{r} = 'アジお刺身';
+    $map{s} = 'アジむむ･･･';
+    $map{t} = 'アジアジフライ';
+    $map{u} = 'ドボ食え食え';
+    $map{v} = 'ドボドボドボ';
+    $map{w} = 'ドボお刺身';
+    $map{x} = 'ドボむむ･･･';
+    $map{y} = 'ドボアジフライ';
+    $map{z} = '山岡食え食え';
+    $map{A} = '山岡ドボドボ';
+    $map{B} = '山岡お刺身';
+    $map{C} = '山岡むむ･･･';
+    $map{D} = '山岡アジフライ';
+    $map{E} = '岡星食え食え';
+    $map{F} = '岡星ドボドボ';
+    $map{G} = '岡星お刺身';
+    $map{H} = '岡星むむ･･･';
+    $map{I} = '岡星アジフライ';
+    $map{J} = 'ゴク･･･食え食え';
+    $map{K} = 'ゴク･･･ドボドボ';
+    $map{L} = 'ゴク･･･お刺身';
+    $map{M} = 'ゴク･･･むむ･･･';
+    $map{N} = 'ゴク･･･アジフライ';
+    $map{O} = 'ああ食え食え';
+    $map{P} = 'ああドボドボ';
+    $map{Q} = 'ああお刺身';
+    $map{R} = 'ああむむ･･･';
+    $map{S} = 'ああアジフライ';
+    $map{T} = '雄山食え食え';
+    $map{U} = '雄山ドボドボ';
+    $map{V} = '雄山お刺身';
+    $map{W} = '雄山むむ･･･';
+    $map{X} = '雄山アジフライ';
+    $map{Y} = '京極食え食え';
     $map{Z} = '京極ドボドボ';
 
-    $map{0} = '京極お刺身';   $map{1} = '京極むむ･･･';    $map{2} = '京極アジフライ';
-    $map{3} = '陶人食え食え'; $map{4} = '陶人ドボドボ';   $map{5} = '陶人お刺身';
-    $map{6} = '陶人むむ･･･';  $map{7} = '陶人アジフライ'; $map{8} = '社主食え食え';
+    $map{0} = '京極お刺身';
+    $map{1} = '京極むむ･･･';
+    $map{2} = '京極アジフライ';
+    $map{3} = '陶人食え食え';
+    $map{4} = '陶人ドボドボ';
+    $map{5} = '陶人お刺身';
+    $map{6} = '陶人むむ･･･';
+    $map{7} = '陶人アジフライ';
+    $map{8} = '社主食え食え';
     $map{9} = '社主ドボドボ';
 
     $map{space} = '中川';
@@ -52,9 +92,9 @@ sub _to_ajifry {
     my $ajifry_word;
     foreach my $raw_char (@raw_chars) {
         given ($raw_char) {
-            when (' ')         { $ajifry_word .= $map{space} }
+            when (' ')           { $ajifry_word .= $map{space} }
             when (/[a-zA-Z0-9]/) { $ajifry_word .= $map{$raw_char} }
-            default            { $ajifry_word .= $raw_char }
+            default              { $ajifry_word .= $raw_char }
         }
     }
 
@@ -73,11 +113,12 @@ sub _from_ajifry {
             last;
         }
 
-        foreach my $key (keys %map) {
-            if ($ajifry_word =~ s/^$map{$key}//) {
-                if ($key ~~ 'space') {
+        foreach my $key ( keys %map ) {
+            if ( $ajifry_word =~ s/^$map{$key}// ) {
+                if ( $key ~~ 'space' ) {
                     $translated_word .= ' ';
-                } else {
+                }
+                else {
                     $translated_word .= $key;
                 }
                 $unmatch = 1;
@@ -99,7 +140,7 @@ sub translate_to_ajifry {
     my $raw_string = shift;
     $raw_string = Encode::decode_utf8($raw_string);
 
-    return Encode::encode_utf8($self->_to_ajifry($raw_string));
+    return Encode::encode_utf8( $self->_to_ajifry($raw_string) );
 }
 
 sub translate_from_ajifry {
@@ -107,7 +148,7 @@ sub translate_from_ajifry {
     my $ajifry_word = shift;
     $ajifry_word = Encode::decode_utf8($ajifry_word);
 
-    return Encode::encode_utf8($self->_from_ajifry($ajifry_word));
+    return Encode::encode_utf8( $self->_from_ajifry($ajifry_word) );
 }
 1;
 
