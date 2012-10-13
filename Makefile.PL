@@ -13,6 +13,7 @@ WriteMakefile(
         'Class::Accessor::Fast' => 0.34,
         'version'    => 5.10.0,
     },
+    LICENSE             => 'perl',
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Acme-AjiFry-*' },
 );
