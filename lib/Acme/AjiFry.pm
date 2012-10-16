@@ -274,6 +274,11 @@ sub _from_ajifry {
 sub translate_to_ajifry {
     my $self       = shift;
     my $raw_string = shift;
+
+    unless ($raw_string) {
+        return '';
+    }
+
     $raw_string = Encode::decode_utf8($raw_string);
 
     return Encode::encode_utf8( $self->_to_ajifry($raw_string) );
@@ -282,6 +287,11 @@ sub translate_to_ajifry {
 sub translate_from_ajifry {
     my $self        = shift;
     my $ajifry_word = shift;
+
+    unless ($ajifry_word) {
+        return '';
+    }
+
     $ajifry_word = Encode::decode_utf8($ajifry_word);
 
     return Encode::encode_utf8( $self->_from_ajifry($ajifry_word) );

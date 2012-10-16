@@ -5,7 +5,7 @@ use Encode;
 use Acme::AjiFry;
 
 BEGIN {
-    use Test::More tests => 4;
+    use Test::More tests => 5;
 }
 
 my $got;
@@ -22,5 +22,8 @@ is($got, "あきらめたらそこでしあいしゅうりょうだよ", "To Ja:
 
 $got = Encode::decode_utf8($aji_fry->translate_from_ajifry("京極お刺身ドボドボ陶人中川ゴク･･･食え食え岡星むむ･･･ドボ食え食え"));
 is($got, "んじゃめな", "To Ja: 4");
+
+$got = Encode::decode_utf8($aji_fry->translate_from_ajifry(""));
+is($got, "", "To Ja: 5");
 
 done_testing();

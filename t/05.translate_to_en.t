@@ -5,7 +5,7 @@ use Encode;
 use Acme::AjiFry::EN;
 
 BEGIN {
-    use Test::More tests => 4;
+    use Test::More tests => 5;
 }
 
 my $got;
@@ -22,5 +22,8 @@ is($got, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "Translate to En: 3");
 
 $got = Encode::decode_utf8($aji_fry_en->translate_from_ajifry("京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡アジフライ岡星食え食え岡星ドボドボフライドボドボ岡星むむ･･･!陶人ドボドボ~-+::京極ドボドボ"));
 is($got, "012abcDEFgH!4~-+::Z", "Translate to En: 4");
+
+$got = Encode::decode_utf8($aji_fry_en->translate_from_ajifry(""));
+is($got, "", "Translate to En: 5");
 
 done_testing();
