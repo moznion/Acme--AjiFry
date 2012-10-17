@@ -51,3 +51,47 @@ sub _self_rewrite {
     exit(0);
 }
 _self_rewrite();
+
+__END__
+
+
+=head1 NAME
+
+Acme::AjiFry::Perl - AjiFry Language Translator for Perl
+
+
+=head1 SYNOPSIS
+
+    use Acme::AjiFry::Perl;
+
+    print 'hello';
+
+
+=head1 DESCRIPTION
+
+Acme::AjiFry::Perl is the AjiFry-Language translator for Perl program.
+This module rewrites a program of using this module.
+
+
+=head1 DEPENDENCIES
+
+Acme::AjiFry::EN
+
+
+=head1 SEE ALSO
+
+L<Acme::AjiFry>.
+L<Acme::AjiFry::EN>.
+
+
+=head1 AUTHOR
+
+moznion  C<< <moznion[at]gmail.com> >>
+
+
+=head1 LICENCE AND COPYRIGHT
+
+Copyright (c) 2012, moznion C<< <moznion[at]gmail.com> >>. All rights reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
