@@ -8,7 +8,7 @@ use Acme::AjiFry::EN;
 use File::Copy;
 use base 'Class::Accessor::Fast';
 
-sub _parse_and_translate($) {
+sub _parse_and_translate {
     my $filename_to_read = shift;
 
     my $ajifry = Acme::AjiFry::EN->new();
