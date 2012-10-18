@@ -306,6 +306,8 @@ sub translate_from_ajifry {
 
 __END__
 
+=encording utf8
+
 =head1 NAME
 
 Acme::AjiFry - AjiFry Language (アジフライ語) Translator
@@ -338,13 +340,16 @@ L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4
 =over
 
 =item new
+
 new is the constructor of this module.
 
 =item translate_from_ajifry
+
 This module needs a AjiFry-Language string as parameter.
 It returns Japanese which was translated from AjiFry-Language.
 
 =item translate_to_ajifry
+
 This module needs a string as parameter.
 It returns AjiFry-Language which was translated from Japanese.
 
@@ -353,6 +358,7 @@ It returns AjiFry-Language which was translated from Japanese.
 =head1 DEPENDENCIES
 
 Perl 5.10.0 or later.
+
 Class::Accessor::Fast 0.34 or later.
 
 =head1 BUGS AND LIMITATIONS

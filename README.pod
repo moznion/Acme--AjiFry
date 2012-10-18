@@ -28,11 +28,13 @@ This document describes Acme::AjiFry version 0.0.4
 =head1 SYNOPSIS for Acme::AjiFry::Perl
 
 Before execute
+
     use Acme::AjiFry::Perl;
 
     print 'hello';
 
 After execute
+
     use Acme::AjiFry::Perl;
 
     アジ食え食えアジお刺身フライむむ･･･お刺身むむ･･･アジアジフライ中川'フライお刺身食えアジフライお刺身ドボドボお刺身ドボドボお刺身アジフライ';
@@ -51,6 +53,7 @@ L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4
 =head1 DEPENDENCIES
 
 Perl 5.10.0 or later.
+
 Class::Accessor::Fast 0.34 or later.
 
 

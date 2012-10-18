@@ -166,9 +166,12 @@ sub translate_from_ajifry {
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Acme::AjiFry::EN - AjiFry Language Translator for English
+
 
 =head1 SYNOPSIS
 
@@ -185,26 +188,32 @@ Acme::AjiFry::EN - AjiFry Language Translator for English
 Acme::AjiFry::EN is the AjiFry-Language translator.
 This module can translate English into AjiFry-Language, and vice versa.
 
+
 =head1 SEE ALSO
 
 L<Acme::AjiFry>.
+
 
 =head1 METHODS
 
 =over
 
 =item new
+
 new is the constructor of this module.
 
 =item translate_from_ajifry
+
 This module needs a AjiFry-Language string as parameter.
 It returns English which was translated from AjiFry-Language.
 
 =item translate_to_ajifry
+
 This module needs a string as parameter.
 It returns AjiFry-Language which was translated from English.
 
 =back
+
 
 =head1 AUTHOR
 
