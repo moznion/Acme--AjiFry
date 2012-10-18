@@ -9,7 +9,7 @@ BEGIN {
   use Test::More tests => 3;
 }
 
-my $tests_dir= Cwd::getcwd() . '/' . (File::Basename::dirname $0);
+my $tests_dir = Cwd::getcwd() . '/' . File::Basename::dirname($0);
 my $rewrite = $tests_dir . '/rewrite';
 my $original_rewrite = $tests_dir . '/rewrite.orig';
 my $translated_rewrite = $tests_dir . '/rewrite.translated';
