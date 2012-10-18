@@ -306,7 +306,7 @@ sub translate_from_ajifry {
 
 __END__
 
-=encording utf8
+=encoding utf8
 
 =head1 NAME
 
