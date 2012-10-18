@@ -2,12 +2,12 @@
 
 =head1 NAME
 
-Acme::AjiFry (Acme::AjiFry::EN) - AjiFry Language (アジフライ語) Translator
+Acme::AjiFry - AjiFry Language (アジフライ語) Translator
 
 
 =head1 VERSION
 
-This document describes Acme::AjiFry version 0.0.3
+This document describes Acme::AjiFry version 0.0.4
 
 
 =head1 SYNOPSIS
@@ -25,11 +25,24 @@ This document describes Acme::AjiFry version 0.0.3
     print $ajifry_en->translate_from_ajifry('京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!')."\n"; # outputs => '012abcABC!!!'
 
 
+=head1 SYNOPSIS for Acme::AjiFry::Perl
+
+Before execute
+    use Acme::AjiFry::Perl;
+
+    print 'hello';
+
+After execute
+    use Acme::AjiFry::Perl;
+
+    アジ食え食えアジお刺身フライむむ･･･お刺身むむ･･･アジアジフライ中川'フライお刺身食えアジフライお刺身ドボドボお刺身ドボドボお刺身アジフライ';
+
+
 =head1 DESCRIPTION
 
-Acme::AjiFry and Acme::AjiFry::EN are AjiFry-Language translator.
+Acme::AjiFry, Acme::AjiFry::EN and Acme::AjiFry::Perl are AjiFry-Language translator.
 
-Acme::AjiFry can translate Japanese into AjiFry-Language, and vice versa. Acme::AjiFry::EN can translate English into AjiFry-Language.
+Acme::AjiFry can translate Japanese into AjiFry-Language, and vice versa. Acme::AjiFry::EN can translate English into AjiFry-Language. Acme::AjiFry::Perl rewrites your perl script which use this module by AjiFru-Language.
 
 If you would like to know about AjiFry-Language, please refer to the folowing web site (Japanese Web Site).
 L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4%E8%AA%9E>
@@ -39,6 +52,7 @@ L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4
 
 Perl 5.10.0 or later.
 Class::Accessor::Fast 0.34 or later.
+
 
 =head1 BUGS AND LIMITATIONS
 

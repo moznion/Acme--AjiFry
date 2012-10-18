@@ -9,3 +9,7 @@ Revision history for Acme-AjiFry
 0.03  Sun Oct 14 02:18:47 2012
        I'm really sorry. Ver 0.02 is something wrong.
        So fixed it.
+
+0.04  Thu Oct 18 12:02:07 2012
+       Impremented function of rewrite own perl script which use "Acme::AjiFry::Perl".
+       And fixed minor bugs.
