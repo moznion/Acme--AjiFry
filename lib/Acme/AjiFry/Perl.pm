@@ -23,8 +23,7 @@ sub _self_rewrite {
     foreach my $line (<$fh_to_read>) {
         if ($after_line_of_use_this_module) {
             print $fh_to_write_replace_file ($ajifry->translate_to_ajifry($line));
-            chomp $line;
-            push @executable_code, $ajifry->translate_from_ajifry($line) . "\n";
+            push @executable_code, $ajifry->translate_from_ajifry($line);
             next;
         } else {
             print $fh_to_write_replace_file $line;

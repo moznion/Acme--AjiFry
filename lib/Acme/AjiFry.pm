@@ -274,27 +274,33 @@ sub _from_ajifry {
 sub translate_to_ajifry {
     my $self       = shift;
     my $raw_string = shift;
+    my $chomped    = chomp($raw_string);
 
     unless ($raw_string) {
+        return "\n" if $chomped;
         return '';
     }
 
     $raw_string = Encode::decode_utf8($raw_string);
-
-    return Encode::encode_utf8( $self->_to_ajifry($raw_string) );
+    my $ajifry_word = Encode::encode_utf8( $self->_to_ajifry($raw_string) );
+    $ajifry_word .= "\n" if $chomped;
+    return $ajifry_word;
 }
 
 sub translate_from_ajifry {
     my $self        = shift;
     my $ajifry_word = shift;
+    my $chomped     = chomp($ajifry_word);
 
     unless ($ajifry_word) {
+        return "\n" if $chomped;
         return '';
     }
 
     $ajifry_word = Encode::decode_utf8($ajifry_word);
-
-    return Encode::encode_utf8( $self->_from_ajifry($ajifry_word) );
+    my $translated_word = Encode::encode_utf8( $self->_from_ajifry($ajifry_word) );
+    $translated_word .= "\n" if $chomped;
+    return $translated_word;
 }
 1;
 
