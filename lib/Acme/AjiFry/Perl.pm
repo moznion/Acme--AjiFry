@@ -8,29 +8,22 @@ use Acme::AjiFry::EN;
 use File::Copy;
 use base 'Class::Accessor::Fast';
 
-sub _self_rewrite {
-    my $ajifry                = Acme::AjiFry::EN->new();
-    my $filename_to_write_out = 'temp_replace_' . time . '_' . $$;
-    my $filename_to_execute   = 'temp_executable_' . time . '_' . $$;
-    my $filename_to_read      = $0;
+sub _parse_and_translate($) {
+    my $filename_to_read = shift;
 
+    my $ajifry = Acme::AjiFry::EN->new();
+    my ( $executable_code, $replace_code );
     open my $fh_to_read, '<', $filename_to_read or die "$filename_to_read: $!";
-    open my $fh_to_write_replace_file, '>', $filename_to_write_out
-      or die "$filename_to_write_out: $!";
-    open my $fh_to_write_executable_file, '>', $filename_to_execute
-      or die "$filename_to_execute: $!";
 
-    my $executable_code;
     my $after_line_of_using_this_module = 0;
     foreach my $line (<$fh_to_read>) {
         if ($after_line_of_using_this_module) {    #translate
-            print $fh_to_write_replace_file (
-                $ajifry->translate_to_ajifry($line) );
+            $replace_code    .= $ajifry->translate_to_ajifry($line);
             $executable_code .= $ajifry->translate_from_ajifry($line);
             next;
         }
         else {                                     #not translate
-            print $fh_to_write_replace_file $line;
+            $replace_code .= $line;
             if ( $line =~ /^\s*use\s*Acme::AjiFry::Perl/ ) {
                 $after_line_of_using_this_module = 1;
             }
@@ -40,16 +33,26 @@ sub _self_rewrite {
         }
     }
 
-    print $fh_to_write_executable_file $executable_code;
-
     close $fh_to_read;
-    close $fh_to_write_replace_file;
-    close $fh_to_write_executable_file;
+    return ( $executable_code, $replace_code );
+}
 
-    system("$^X $filename_to_execute");
+sub _self_rewrite {
+    my $filename_to_write_out = 'temp_replace_' . time . '_' . $$;
+    my $filename_to_read      = $0;
+
+    open my $fh_to_write_replace_file, '>', $filename_to_write_out
+      or die "$filename_to_write_out: $!";
+
+    my ( $executable_code, $replace_code ) =
+      _parse_and_translate($filename_to_read);
+    print $fh_to_write_replace_file $replace_code;
+
+    close $fh_to_write_replace_file;
+
+    eval $executable_code;
     File::Copy::copy $filename_to_write_out, $filename_to_read;
     unlink $filename_to_write_out;
-    unlink $filename_to_execute;
     exit(0);
 }
 _self_rewrite();
