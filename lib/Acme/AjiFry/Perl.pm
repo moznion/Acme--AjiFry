@@ -38,21 +38,17 @@ sub _parse_and_translate($) {
 }
 
 sub _self_rewrite {
-    my $filename_to_write_out = 'temp_replace_' . time . '_' . $$;
-    my $filename_to_read      = $0;
-
-    open my $fh_to_write_replace_file, '>', $filename_to_write_out
-      or die "$filename_to_write_out: $!";
+    my $target_filename = $0;
 
     my ( $executable_code, $replace_code ) =
-      _parse_and_translate($filename_to_read);
-    print $fh_to_write_replace_file $replace_code;
+      _parse_and_translate($target_filename);
 
-    close $fh_to_write_replace_file;
+    open my $fh_to_rewrite, '>', $target_filename
+      or die "$target_filename: $!";
+    print $fh_to_rewrite $replace_code;
+    close $fh_to_rewrite;
 
     eval $executable_code;
-    File::Copy::copy $filename_to_write_out, $filename_to_read;
-    unlink $filename_to_write_out;
     exit(0);
 }
 _self_rewrite();
