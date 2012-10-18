@@ -20,28 +20,27 @@ sub _self_rewrite {
     open my $fh_to_write_executable_file, '>', $filename_to_execute
       or die "$filename_to_execute: $!";
 
-    my @executable_code;
+    my $executable_code;
     my $after_line_of_using_this_module = 0;
     foreach my $line (<$fh_to_read>) {
         if ($after_line_of_using_this_module) {    #translate
             print $fh_to_write_replace_file (
                 $ajifry->translate_to_ajifry($line) );
-            push @executable_code, $ajifry->translate_from_ajifry($line);
+            $executable_code .= $ajifry->translate_from_ajifry($line);
             next;
         }
         else {                                     #not translate
             print $fh_to_write_replace_file $line;
-            push @executable_code, $line;
-        }
-        if ( $line =~ /^\s*use\s*Acme::AjiFry::Perl/ ) {
-            pop @executable_code;
-            $after_line_of_using_this_module = 1;
+            if ( $line =~ /^\s*use\s*Acme::AjiFry::Perl/ ) {
+                $after_line_of_using_this_module = 1;
+            }
+            else {
+                $executable_code .= $line;
+            }
         }
     }
 
-    foreach my $code (@executable_code) {
-        print $fh_to_write_executable_file $code;
-    }
+    print $fh_to_write_executable_file $executable_code;
 
     close $fh_to_read;
     close $fh_to_write_replace_file;
