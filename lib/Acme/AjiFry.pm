@@ -281,8 +281,8 @@ sub translate_to_ajifry {
         return '';
     }
 
-    $raw_string = Encode::decode_utf8($raw_string);
-    my $ajifry_word = Encode::encode_utf8( $self->_to_ajifry($raw_string) );
+    my $ajifry_word = Encode::encode_utf8(
+        $self->_to_ajifry( Encode::decode_utf8($raw_string) ) );
     $ajifry_word .= "\n" if $chomped;
     return $ajifry_word;
 }
@@ -297,8 +297,8 @@ sub translate_from_ajifry {
         return '';
     }
 
-    $ajifry_word = Encode::decode_utf8($ajifry_word);
-    my $translated_word = Encode::encode_utf8( $self->_from_ajifry($ajifry_word) );
+    my $translated_word = Encode::encode_utf8(
+        $self->_from_ajifry( Encode::decode_utf8($ajifry_word) ) );
     $translated_word .= "\n" if $chomped;
     return $translated_word;
 }
