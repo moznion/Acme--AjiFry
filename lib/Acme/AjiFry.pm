@@ -9,7 +9,7 @@ use Encode;
 use List::Util;
 use base 'Class::Accessor::Fast';
 
-use version; our $VERSION = '0.05';
+use version; our $VERSION = '0.06';
 
 our %cols;
 our %rows;

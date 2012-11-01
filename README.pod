@@ -56,6 +56,7 @@ Perl 5.10.0 or later.
 
 Class::Accessor::Fast 0.34 or later.
 
+Filter::Simple 0.84 or later.
 
 =head1 BUGS AND LIMITATIONS
 
