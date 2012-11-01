@@ -17,6 +17,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Class::Accessor::Fast' => 0.34,
+        'Filter::Simple' => 0.84,
     },
     META_MERGE => {
         resources => {

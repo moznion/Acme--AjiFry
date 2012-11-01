@@ -16,3 +16,6 @@ Revision history for Acme-AjiFry
 
 0.05  Wed Oct 31 15:45:22 2012
        Fixed misprints at the SYNOPSIS.
+
+0.06  Fri Nov 02 02:26:00 2012
+       Improved Acme::AjiFry::Perl by using Filter::Simple.

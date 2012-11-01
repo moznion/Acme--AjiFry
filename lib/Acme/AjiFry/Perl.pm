@@ -5,55 +5,22 @@ use strict;
 use utf8;
 
 use Acme::AjiFry::EN;
-use File::Copy;
-use base 'Class::Accessor::Fast';
+use Filter::Simple;
 
-sub _parse_and_translate {
-    my $filename_to_read = shift;
+my $ajifry = Acme::AjiFry::EN->new();
 
-    my $ajifry = Acme::AjiFry::EN->new();
-    my ( $executable_code, $replace_code );
-    open my $fh_to_read, '<', $filename_to_read or die "$filename_to_read: $!";
+FILTER_ONLY executable => sub {
+    s/(.+)/$ajifry->translate_to_ajifry($1)/eg;
+}, all => sub {
+    open my $fh,'+<',"$0" or die "Can't rewrite '$0'\n";
+    seek $fh,0,0;
+    print $fh "use Acme::AjiFry::Perl;\n";
+    print $fh $_;
+}, executable => sub {
+    s/(.+)/$ajifry->translate_from_ajifry($1)/eg;
+};
 
-    my $after_line_of_using_this_module = 0;
-    foreach my $line (<$fh_to_read>) {
-        if ($after_line_of_using_this_module) {    #translate
-            $replace_code    .= $ajifry->translate_to_ajifry($line);
-            $executable_code .= $ajifry->translate_from_ajifry($line);
-            next;
-        }
-        else {                                     #not translate
-            $replace_code .= $line;
-            if ( $line =~ /^\s*use\s*Acme::AjiFry::Perl/ ) {
-                $after_line_of_using_this_module = 1;
-            }
-            else {
-                $executable_code .= $line;
-            }
-        }
-    }
-
-    close $fh_to_read;
-    return ( $executable_code, $replace_code );
-}
-
-sub _self_rewrite {
-    my $target_filename = $0;
-
-    my ( $executable_code, $replace_code ) =
-      _parse_and_translate($target_filename);
-
-    open my $fh_to_rewrite, '>', $target_filename
-      or die "$target_filename: $!";
-    print $fh_to_rewrite $replace_code;
-    close $fh_to_rewrite;
-
-    eval $executable_code;
-    exit(0);
-}
-_self_rewrite();
-
-__END__
+1;
 
 =encoding utf8
 
