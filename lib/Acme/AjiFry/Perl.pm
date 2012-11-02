@@ -7,20 +7,37 @@ use utf8;
 use Acme::AjiFry::EN;
 use Filter::Simple;
 
+sub extract_statements_avobe_declaration {
+    open my $frh, '<', $0 or die "Can't open $0: $!";
+
+    my $above_declaration_str;
+    foreach my $line (<$frh>) {
+        $above_declaration_str .= $line;
+        last if ( $line =~ /^\s*use\s*Acme::AjiFry::Perl/ );
+    }
+    close $frh;
+
+    return $above_declaration_str;
+}
+
 my $ajifry = Acme::AjiFry::EN->new();
 
-FILTER_ONLY executable => sub {
+FILTER_ONLY all => sub {
     s/(.+)/$ajifry->translate_to_ajifry($1)/eg;
-}, all => sub {
+
     open my $fh,'+<',"$0" or die "Can't rewrite '$0'\n";
     seek $fh,0,0;
-    print $fh "use Acme::AjiFry::Perl;\n";
-    print $fh $_;
-}, executable => sub {
-    s/(.+)/$ajifry->translate_from_ajifry($1)/eg;
-};
 
+    print $fh &extract_statements_avobe_declaration;
+    print $fh $_;
+
+    s/(.+)/$ajifry->translate_from_ajifry($1)/eg;
+
+    close $fh;
+};
 1;
+
+__END__
 
 =encoding utf8
 
