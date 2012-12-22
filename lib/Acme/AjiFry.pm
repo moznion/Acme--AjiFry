@@ -9,7 +9,7 @@ use Encode;
 use List::Util;
 use base 'Class::Accessor::Fast';
 
-use version; our $VERSION = '0.06';
+use version; our $VERSION = '0.07';
 
 our %cols;
 our %rows;
@@ -315,7 +315,7 @@ Acme::AjiFry - AjiFry Language (アジフライ語) Translator
 
 =head1 VERSION
 
-This document describes Acme::AjiFry version 0.0.6
+This document describes Acme::AjiFry version 0.0.7
 
 
 =head1 SYNOPSIS
