@@ -7,7 +7,7 @@ Acme::AjiFry - AjiFry Language (アジフライ語) Translator
 
 =head1 VERSION
 
-This document describes Acme::AjiFry version 0.07
+This document describes Acme::AjiFry version 0.08
 
 
 =head1 SYNOPSIS

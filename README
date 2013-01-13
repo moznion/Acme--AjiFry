@@ -1,27 +1,55 @@
-This is Perl module Acme::AjiFry.
+NAME
+    Acme::AjiFry - AjiFry Language (アジフライ語) Translator
 
-INSTALLATION
+VERSION
+    This document describes Acme::AjiFry version 0.08
 
-Acme::AjiFry installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+SYNOPSIS
+        use Acme::AjiFry;
 
-    $ cpan Acme::AjiFry
+        my $ajifry = Acme::AjiFry->new();
 
-Download it, unpack it, then build it as per the usual:
+        print $ajifry->translate_to_ajifry('おさしみ')."\n"; # outputs => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+        print $ajifry->translate_from_ajifry('食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ')."\n"; # outputs => "おさしみ"
 
-    $ perl Makefile.PL
-    $ make && make test
+DESCRIPTION
+    Acme::AjiFry is the AjiFry-Language translator. This module can
+    translate Japanese into AjiFry-Language, and vice versa. If you would
+    like to know about AjiFry-Language, please refer to the following web
+    site (Japanese Web Site).
+    <http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E
+    3%82%A4%E8%AA%9E>
 
-Then install it:
+METHODS
+    new new is the constructor of this module.
 
-    $ make install
+    translate_from_ajifry
+        This function needs a AjiFry-Language string as parameter. It
+        returns Japanese which was translated from AjiFry-Language.
 
-DOCUMENTATION
+    translate_to_ajifry
+        This function needs a string as parameter. It returns
+        AjiFry-Language which was translated from Japanese.
 
-Acme::AjiFry documentation is available as in POD. So you can do:
+DEPENDENCIES
+    Perl 5.10.0 or later.
 
-    $ perldoc Acme::AjiFry
+    Class::Accessor::Fast 0.34 or later.
 
-to read the documentation online with your favorite pager.
+BUGS AND LIMITATIONS
+    No bugs have been reported.
 
-moznion
+    Please report any bugs or feature requests to
+    "bug-acme-ajifry@rt.cpan.org", or through the web interface at
+    <http://rt.cpan.org>.
+
+AUTHOR
+    moznion "<moznion[at]gmail.com>"
+
+LICENCE AND COPYRIGHT
+    Copyright (c) 2012, moznion "<moznion[at]gmail.com>". All rights
+    reserved.
+
+    This module is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself. See perlartistic.
+

@@ -1,4 +1,4 @@
-Build
+Build.PL
 Changes
 eg/rewrite.pl
 eg/rewrite.pl.orig
@@ -7,7 +7,9 @@ lib/Acme/AjiFry.pm
 lib/Acme/AjiFry/EN.pm
 lib/Acme/AjiFry/Perl.pm
 MANIFEST			This list of files
+MANIFEST.SKIP
 README
+README.pod
 t/00.load.t
 t/01.translate_from_ja.t
 t/02.translate_to_ja.t
@@ -24,3 +26,6 @@ xt/03.pod-coverage.t
 xt/04.synopsis.t
 xt/05.perlcritic.t
 xt/perlcriticrc
+LICENSE
+META.yml
+META.json
