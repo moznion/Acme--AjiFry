@@ -7,7 +7,7 @@ use utf8;
 use Acme::AjiFry::EN;
 use Filter::Simple;
 
-sub extract_statements_avobe_declaration {
+sub _extract_statements_avobe_declaration {
     open my $frh, '<', $0 or die "Can't open $0: $!";
 
     my $above_declaration_str;
@@ -28,7 +28,7 @@ FILTER_ONLY all => sub {
     open my $fh,'+<',"$0" or die "Can't rewrite '$0'\n";
     seek $fh,0,0;
 
-    print $fh &extract_statements_avobe_declaration;
+    print $fh &_extract_statements_avobe_declaration;
     print $fh $_;
 
     s/(.+)/$ajifry->translate_from_ajifry($1)/eg;
