@@ -1,3 +1,4 @@
+Build
 Changes
 eg/rewrite.pl
 eg/rewrite.pl.orig
@@ -5,7 +6,6 @@ eg/sample.pl
 lib/Acme/AjiFry.pm
 lib/Acme/AjiFry/EN.pm
 lib/Acme/AjiFry/Perl.pm
-Makefile.PL
 MANIFEST			This list of files
 README
 t/00.load.t

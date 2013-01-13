@@ -1,4 +1,3 @@
-MANIFEST.bak
 MYMETA.json
 MYMETA.yml
 Makefile
@@ -6,3 +5,13 @@ blib/
 pm_to_blib
 *.tar.gz
 t/rewrite
+Makefile.old
+Build
+Build.dat
+META.*
+.DS_Store
+*.bak
+Acme-AjiFry-*
+Acme-AjiFry-*.tar.gz
+inc/
+_build/
