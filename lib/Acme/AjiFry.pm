@@ -6,7 +6,7 @@ use utf8;
 use Encode;
 use List::Util;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use constant COLS => {
     a => [
@@ -383,7 +383,7 @@ Acme::AjiFry - AjiFry Language (アジフライ語) Translator
 
 =head1 VERSION
 
-This document describes Acme::AjiFry version 0.08
+This document describes Acme::AjiFry version 0.09
 
 
 =head1 SYNOPSIS

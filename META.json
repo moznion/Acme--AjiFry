@@ -4,7 +4,7 @@
       "moznion  C<< <moznion[at]gmail.com> >>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.4.3, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Minilla/v0.4.3, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -28,10 +28,9 @@
       "build" : {
          "requires" : {
             "Cwd" : "0",
-            "Encode" : "2.39",
-            "File::Basename" : "2.78",
-            "File::Compare" : "1.1006",
-            "File::Copy" : "2.18",
+            "File::Basename" : "2.77",
+            "File::Compare" : "1.1005",
+            "File::Copy" : "2.13",
             "Test::More" : "0.98"
          }
       },
@@ -39,7 +38,7 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "CPAN::Meta::Prereqs" : "0",
-            "Module::Build" : "0.38"
+            "Module::Build" : "0.4003"
          }
       },
       "develop" : {
@@ -52,12 +51,10 @@
       },
       "runtime" : {
          "requires" : {
-            "Carp" : "0",
-            "Class::Accessor::Fast" : "0.34",
+            "Encode" : "2.39",
             "Filter::Simple" : "0.84",
             "List::Util" : "1.22",
-            "base" : "0",
-            "perl" : "5.010000"
+            "perl" : "5.008009"
          }
       }
    },
@@ -73,7 +70,7 @@
          "web" : "https://github.com/moznion/Acme--AjiFry"
       }
    },
-   "version" : "0.08",
+   "version" : "0.09",
    "x_contributors" : [
       "papix <papix2011@gmail.com>",
       "papix <mail@papix.net>",

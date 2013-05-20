@@ -6,7 +6,7 @@ Acme::AjiFry - AjiFry Language (アジフライ語) Translator
 
 # VERSION
 
-This document describes Acme::AjiFry version 0.08
+This document describes Acme::AjiFry version 0.09
 
 
 
@@ -16,8 +16,8 @@ This document describes Acme::AjiFry version 0.08
 
     my $ajifry = Acme::AjiFry->new();
 
-    print $ajifry->translate_to_ajifry('おさしみ')."\n"; # outputs => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
-    print $ajifry->translate_from_ajifry('食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ')."\n"; # outputs => "おさしみ"
+    print $ajifry->to_AjiFry('おさしみ')."\n"; # outputs => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+    print $ajifry->to_Japanese('食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ')."\n"; # outputs => "おさしみ"
 
 
 
@@ -34,21 +34,21 @@ If you would like to know about AjiFry-Language, please refer to the following w
 
     new is the constructor of this module.
 
-- translate\_from\_ajifry
+- to\_Japanese
 
     This function needs a AjiFry-Language string as parameter.
     It returns Japanese which was translated from AjiFry-Language.
 
-- translate\_to\_ajifry
+- to\_AjiFry
 
     This function needs a string as parameter.
     It returns AjiFry-Language which was translated from Japanese.
 
 # DEPENDENCIES
 
-Perl 5.10.0 or later.
+- Encode (version 2.39 or later)
 
-Class::Accessor::Fast 0.34 or later.
+
 
 # BUGS AND LIMITATIONS
 
