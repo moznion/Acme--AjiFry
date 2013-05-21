@@ -1,5 +1,10 @@
 Revision history for Acme-AjiFry
 
+{{$NEXT}}
+
+0.09  Tue May 21 22:54:03 JST 2013
+       - Replace "smart-match" to "if-else" (for perl-5.18).
+
 0.08  Mon Jan 14 01:48:06 JST 2013
        - Fixed a problem of failing some tests.
        - Changed builder module, to Module::Build from ExtUtils::MakeMaker.
