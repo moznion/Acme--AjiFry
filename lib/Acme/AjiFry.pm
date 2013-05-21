@@ -10,84 +10,78 @@ use base 'Class::Accessor::Fast';
 
 use version; our $VERSION = '0.08';
 
-our %cols;
-our %rows;
-our @dullness;
-our @p_sound;
-our @double_consonant;
+use constant COLS => {
+    a => [
+        'あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ',
+        'が', 'ざ', 'だ', 'ば', 'ぱ', 'ぁ', 'ゃ', 'ゎ'
+    ],
+    i => [
+        'い', 'き', 'し', 'ち', 'に', 'ひ', 'み', 'り',
+        'ぎ', 'じ', 'ぢ', 'び', 'ぴ', 'ぃ'
+    ],
+    u => [
+        'う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'ぐ',
+        'ず', 'づ', 'ぶ', 'ぷ', 'ぅ', 'っ', 'ゅ'
+    ],
+    e => [
+        'え', 'け', 'せ', 'て', 'ね', 'へ', 'め', 'れ',
+        'げ', 'ぜ', 'で', 'べ', 'ぺ', 'ぇ',
+    ],
+    o => [
+        'お', 'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'を',
+        'ご', 'ぞ', 'ど', 'ぼ', 'ぽ', 'ぉ', 'ょ'
+    ],
+    n => ['ん'],
+};
+use constant ROWS => {
+    a =>
+      [ 'あ', 'い', 'う', 'え', 'お', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ' ],
+    k =>
+      [ 'か', 'き', 'く', 'け', 'こ', 'が', 'ぎ', 'ぐ', 'げ', 'ご' ],
+    s =>
+      [ 'さ', 'し', 'す', 'せ', 'そ', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ' ],
+    t => [
+        'た', 'ち', 'つ', 'て', 'と', 'だ',
+        'ぢ', 'づ', 'で', 'ど', 'っ'
+    ],
+    n => [ 'な', 'に', 'ぬ', 'ね', 'の' ],
+    h => [
+        'は', 'ひ', 'ふ', 'へ', 'ほ', 'ば', 'び', 'ぶ',
+        'べ', 'ぼ', 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'
+    ],
+    m => [ 'ま', 'み', 'む', 'め', 'も' ],
+    y => [ 'や', 'ゆ', 'よ', 'ゃ', 'ゅ', 'ょ' ],
+    r => [ 'ら', 'り', 'る', 'れ', 'ろ' ],
+    w => [ 'わ', 'を', 'ゎ' ],
+};
+use constant DULLNESS => [
+    'が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
+    'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ'
+];
+use constant P_SOUND => [ 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'];
+use constant DOUBLE_CONSONANT => [ 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ' ];
 
 sub new {
     my $class = shift;
-
-    $cols{a} = [
-        'あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ',
-        'が', 'ざ', 'だ', 'ば', 'ぱ', 'ぁ', 'ゃ', 'ゎ'
-    ];
-    $cols{i} = [
-        'い', 'き', 'し', 'ち', 'に', 'ひ', 'み', 'り',
-        'ぎ', 'じ', 'ぢ', 'び', 'ぴ', 'ぃ'
-    ];
-    $cols{u} = [
-        'う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'ぐ',
-        'ず', 'づ', 'ぶ', 'ぷ', 'ぅ', 'っ', 'ゅ'
-    ];
-    $cols{e} = [
-        'え', 'け', 'せ', 'て', 'ね', 'へ', 'め', 'れ',
-        'げ', 'ぜ', 'で', 'べ', 'ぺ', 'ぇ',
-    ];
-    $cols{o} = [
-        'お', 'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'を',
-        'ご', 'ぞ', 'ど', 'ぼ', 'ぽ', 'ぉ', 'ょ'
-    ];
-    $cols{n} = ['ん'];
-
-    $rows{a} =
-      [ 'あ', 'い', 'う', 'え', 'お', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ' ];
-    $rows{k} =
-      [ 'か', 'き', 'く', 'け', 'こ', 'が', 'ぎ', 'ぐ', 'げ', 'ご' ];
-    $rows{s} =
-      [ 'さ', 'し', 'す', 'せ', 'そ', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ' ];
-    $rows{t} = [
-        'た', 'ち', 'つ', 'て', 'と', 'だ',
-        'ぢ', 'づ', 'で', 'ど', 'っ'
-    ];
-    $rows{n} = [ 'な', 'に', 'ぬ', 'ね', 'の' ];
-    $rows{h} = [
-        'は', 'ひ', 'ふ', 'へ', 'ほ', 'ば', 'び', 'ぶ',
-        'べ', 'ぼ', 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'
-    ];
-    $rows{m} = [ 'ま', 'み', 'む', 'め', 'も' ];
-    $rows{y} = [ 'や', 'ゆ', 'よ', 'ゃ', 'ゅ', 'ょ' ];
-    $rows{r} = [ 'ら', 'り', 'る', 'れ', 'ろ' ];
-    $rows{w} = [ 'わ', 'を', 'ゎ' ];
-
-    @dullness = (
-        'が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
-        'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ'
-    );
-    @p_sound = ( 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ' );
-    @double_consonant =
-      ( 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ' );
 
     my $self = $class->SUPER::new();
     return $self;
 }
 
 sub _search_key_of_element {
-    my ( $self, $element, %hash ) = @_;
+    my ( $self, $element, $hash ) = @_;
 
-    foreach my $key ( sort keys %hash ) {
-        if ( List::Util::first { $_ eq $element } @{ $hash{$key} } ) {
+    foreach my $key ( sort keys %$hash ) {
+        if ( List::Util::first { $_ eq $element } @{ $hash->{$key} } ) {
             return $key;
         }
     }
 }
 
 sub _find_first {
-    my $self = shift;
-    my ( $key, @list ) = @_;
+    my ( $self, $key, $list ) = @_;
 
-    return ( List::Util::first { $_ eq $key } @list ) ? 1 : 0;
+    return ( List::Util::first { $_ eq $key } @$list ) ? 1 : 0;
 }
 
 sub _find_duplicate_element_in_both_lists {
@@ -210,8 +204,8 @@ sub _to_ajifry {
     my @raw_chars = split //, $raw_string;
     my $ajifry_word;
     foreach my $raw_char (@raw_chars) {
-        my $vowel     = $self->_search_key_of_element( $raw_char, %cols );
-        my $consonant = $self->_search_key_of_element( $raw_char, %rows );
+        my $vowel     = $self->_search_key_of_element( $raw_char, COLS );
+        my $consonant = $self->_search_key_of_element( $raw_char, ROWS );
 
         if ( !$vowel && !$consonant ) {
             $ajifry_word .= $raw_char;    # not HIRAGANA
@@ -219,11 +213,11 @@ sub _to_ajifry {
         }
 
         $ajifry_word .= "中川"
-          if $self->_find_first( $raw_char, @double_consonant );
+          if $self->_find_first( $raw_char, DOUBLE_CONSONANT );
         $ajifry_word .= $self->_get_ajifry_word_by_consonant($consonant);
         $ajifry_word .= $self->_get_ajifry_word_by_vowel($vowel);
-        $ajifry_word .= "社主" if $self->_find_first( $raw_char, @p_sound );
-        $ajifry_word .= "陶人" if $self->_find_first( $raw_char, @dullness );
+        $ajifry_word .= "社主" if $self->_find_first( $raw_char, P_SOUND );
+        $ajifry_word .= "陶人" if $self->_find_first( $raw_char, DULLNESS );
     }
     return $ajifry_word;
 }
@@ -276,7 +270,7 @@ sub _from_ajifry {
         $vowel     = $self->_get_vowel_by_ajifry_word($vowel);
 
         my @match_characters =
-          $self->_find_duplicate_element_in_both_lists( $rows{$consonant}, $cols{$vowel} );
+          $self->_find_duplicate_element_in_both_lists( ROWS->{$consonant}, COLS->{$vowel} );
         if ($is_p_sound) {
             $translated_word .= $match_characters[2];
         }
