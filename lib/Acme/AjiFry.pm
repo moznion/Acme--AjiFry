@@ -6,9 +6,8 @@ use utf8;
 
 use Encode;
 use List::Util;
-use base 'Class::Accessor::Fast';
 
-use version; our $VERSION = '0.08';
+our $VERSION = '0.08';
 
 use constant COLS => {
     a => [
@@ -63,9 +62,7 @@ use constant DOUBLE_CONSONANT => [ 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', '�
 
 sub new {
     my $class = shift;
-
-    my $self = $class->SUPER::new();
-    return $self;
+    return $class;
 }
 
 sub _search_key_of_element {
@@ -91,7 +88,7 @@ sub _find_duplicate_element_in_both_lists {
     my @duplicate_elements;
     foreach my $element_A ( @{$list_A} ) {
         foreach my $element_B ( @{$list_B} ) {
-            if ( $element_A ~~ $element_B ) {
+            if ( $element_A eq $element_B ) {
                 push( @duplicate_elements, $element_A );
             }
         }
@@ -277,7 +274,7 @@ sub _from_ajifry {
         elsif ($is_dullness) {
             $translated_word .= $match_characters[1];
         }
-        elsif ( $is_double_consonant && $consonant ~~ 't' ) {
+        elsif ( $is_double_consonant && $consonant eq 't' ) {
             $translated_word .= $match_characters[2];
         }
         elsif ($is_double_consonant) {
