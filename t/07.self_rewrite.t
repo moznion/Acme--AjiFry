@@ -1,3 +1,5 @@
+#!perl
+
 use strict;
 use utf8;
 use Cwd;
@@ -5,9 +7,7 @@ use File::Basename;
 use File::Compare;
 use File::Copy;
 
-BEGIN {
-  use Test::More tests => 3;
-}
+use Test::More;
 
 my $tests_dir = Cwd::getcwd() . '/' . File::Basename::dirname($0);
 my $rewrite = $tests_dir . '/rewrite';
