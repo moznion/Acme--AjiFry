@@ -3,7 +3,6 @@ package Acme::AjiFry;
 use warnings;
 use strict;
 use utf8;
-use feature qw(switch);
 
 use Encode;
 use List::Util;
@@ -110,18 +109,28 @@ sub _get_ajifry_word_by_consonant {
     my $self      = shift;
     my $consonant = shift;
 
-    given ($consonant) {
-        when ('a') { return "食え" }
-        when ('k') { return "フライ" }
-        when ('s') { return "お刺身" }
-        when ('t') { return "アジ" }
-        when ('n') { return "ドボ" }
-        when ('h') { return "山岡" }
-        when ('m') { return "岡星" }
-        when ('y') { return "ゴク･･･" }
-        when ('r') { return "ああ" }
-        when ('w') { return "雄山" }
-        default    { return "" }
+    if ($consonant eq 'a') {
+        return "食え";
+    } elsif ($consonant eq 'k') {
+        return "フライ";
+    } elsif ($consonant eq 's') {
+        return "お刺身";
+    } elsif ($consonant eq 't') {
+        return "アジ";
+    } elsif ($consonant eq 'n') {
+        return "ドボ";
+    } elsif ($consonant eq 'h') {
+        return "山岡";
+    } elsif ($consonant eq 'm') {
+        return "岡星";
+    } elsif ($consonant eq 'y') {
+        return "ゴク･･･";
+    } elsif ($consonant eq 'r') {
+        return "ああ";
+    } elsif ($consonant eq 'w') {
+        return "雄山";
+    } else {
+        return "";
     }
 }
 
@@ -129,14 +138,20 @@ sub _get_ajifry_word_by_vowel {
     my $self  = shift;
     my $vowel = shift;
 
-    given ($vowel) {
-        when ('a') { return "食え食え" }
-        when ('i') { return "ドボドボ" }
-        when ('u') { return "お刺身" }
-        when ('e') { return "むむ･･･" }
-        when ('o') { return "アジフライ" }
-        when ('n') { return "京極" }
-        default    { return "" }
+    if ($vowel eq 'a') {
+        return "食え食え";
+    } elsif ($vowel eq 'i') {
+        return "ドボドボ";
+    } elsif ($vowel eq 'u') {
+        return "お刺身";
+    } elsif ($vowel eq 'e') {
+        return "むむ･･･";
+    } elsif ($vowel eq 'o') {
+        return "アジフライ";
+    } elsif ($vowel eq 'n') {
+        return "京極";
+    } else {
+        return "";
     }
 }
 
@@ -144,20 +159,28 @@ sub _get_consonant_by_ajifry_word {
     my $self        = shift;
     my $ajifry_word = shift;
 
-    given ($ajifry_word) {
-        when ('食え')       { return 'a' }
-        when ('フライ')     { return 'k' }
-        when ('お刺身')     { return 's' }
-        when ('アジ')       { return 't' }
-        when ('ドボ')       { return 'n' }
-        when ('山岡')       { return 'h' }
-        when ('岡星')       { return 'm' }
-        when ('ゴク・・・') { return 'y' }
-        when ('ゴク･･･')    { return 'y' }
-        when ('ゴク…')      { return 'y' }
-        when ('ああ')       { return 'r' }
-        when ('雄山')       { return 'w' }
-        default             { return }
+    if ($ajifry_word eq '食え') {
+        return 'a';
+    } elsif ($ajifry_word eq 'フライ') {
+        return 'k';
+    } elsif ($ajifry_word eq 'お刺身') {
+        return 's';
+    } elsif ($ajifry_word eq 'アジ') {
+        return 't';
+    } elsif ($ajifry_word eq 'ドボ') {
+        return 'n';
+    } elsif ($ajifry_word eq '山岡') {
+        return 'h';
+    } elsif ($ajifry_word eq '岡星') {
+        return 'm';
+    } elsif ($ajifry_word eq 'ゴク・・・' || $ajifry_word eq 'ゴク･･･' || $ajifry_word eq 'ゴク…') {
+        return 'y';
+    } elsif ($ajifry_word eq 'ああ') {
+        return 'r';
+    } elsif ($ajifry_word eq '雄山') {
+        return 'w';
+    } else {
+        return;
     }
 }
 
@@ -165,15 +188,18 @@ sub _get_vowel_by_ajifry_word {
     my $self        = shift;
     my $ajifry_word = shift;
 
-    given ($ajifry_word) {
-        when ('食え食え')   { return 'a' }
-        when ('ドボドボ')   { return 'i' }
-        when ('お刺身')     { return 'u' }
-        when ('むむ・・・') { return 'e' }
-        when ('むむ･･･')    { return 'e' }
-        when ('むむ…')      { return 'e' }
-        when ('アジフライ') { return 'o' }
-        default             { return }
+    if ($ajifry_word eq '食え食え') {
+        return 'a';
+    } elsif ($ajifry_word eq 'ドボドボ') {
+        return 'i';
+    } elsif ($ajifry_word eq 'お刺身') {
+        return 'u';
+    } elsif ($ajifry_word eq 'むむ・・・' || $ajifry_word eq 'むむ･･･' || $ajifry_word eq 'むむ…') {
+        return 'e';
+    } elsif ($ajifry_word eq 'アジフライ') {
+        return 'o';
+    } else {
+        return;
     }
 }
 
