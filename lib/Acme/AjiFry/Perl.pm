@@ -23,7 +23,7 @@ sub _extract_statements_avobe_declaration {
 my $ajifry = Acme::AjiFry::EN->new();
 
 FILTER_ONLY all => sub {
-    s/(.+)/$ajifry->translate_to_ajifry($1)/eg;
+    s/(.+)/$ajifry->to_AjiFry($1)/eg;
 
     open my $fh, '+<', "$0" or die "Can't rewrite '$0'\n";
     seek $fh, 0, 0;
@@ -31,7 +31,7 @@ FILTER_ONLY all => sub {
     print $fh &_extract_statements_avobe_declaration;
     print $fh $_;
 
-    s/(.+)/$ajifry->translate_from_ajifry($1)/eg;
+    s/(.+)/$ajifry->to_English($1)/eg;
 
     close $fh;
 };

@@ -87,6 +87,7 @@ sub to_AjiFry {
         return '';
     }
 
+    $raw_string = decode_utf8($raw_string);
     my $ajifry_word = $self->_to_ajifry($raw_string);
     $ajifry_word .= "\n" if $chomped;
     return encode_utf8($ajifry_word);
@@ -109,7 +110,7 @@ sub to_English {
     $ajifry_word = Encode::decode_utf8($ajifry_word);
     my $translated_word = $self->_to_English($ajifry_word);
     $translated_word .= "\n" if $chomped;
-    return $translated_word;
+    return encode_utf8($translated_word);
 }
 
 sub translate_from_ajifry {
