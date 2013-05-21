@@ -61,8 +61,11 @@ This module rewrites a program of using this module.
 
 =head1 DEPENDENCIES
 
-Acme::AjiFry::EN
+=over 4
 
+=item * Acme::AjiFry::EN
+
+=item * Filter::Simple (version 0.84 or later)
 
 =head1 SEE ALSO
 
