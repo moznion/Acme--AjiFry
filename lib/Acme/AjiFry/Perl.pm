@@ -25,8 +25,8 @@ my $ajifry = Acme::AjiFry::EN->new();
 FILTER_ONLY all => sub {
     s/(.+)/$ajifry->translate_to_ajifry($1)/eg;
 
-    open my $fh,'+<',"$0" or die "Can't rewrite '$0'\n";
-    seek $fh,0,0;
+    open my $fh, '+<', "$0" or die "Can't rewrite '$0'\n";
+    seek $fh, 0, 0;
 
     print $fh &_extract_statements_avobe_declaration;
     print $fh $_;

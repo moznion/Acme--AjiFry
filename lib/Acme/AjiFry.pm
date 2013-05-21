@@ -56,8 +56,9 @@ use constant DULLNESS => [
     'が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ',
     'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ'
 ];
-use constant P_SOUND => [ 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'];
-use constant DOUBLE_CONSONANT => [ 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ' ];
+use constant P_SOUND => [ 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ' ];
+use constant DOUBLE_CONSONANT =>
+  [ 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', 'ゃ', 'ゅ', 'ょ', 'ゎ' ];
 
 sub new {
     my $class = shift;
@@ -80,13 +81,13 @@ sub to_AjiFry {
 }
 
 sub translate_to_ajifry {
-    my ($self, $raw_string) = @_;
+    my ( $self, $raw_string ) = @_;
     return $self->to_AjiFry($raw_string);
 }
 
 sub to_Japanese {
-    my ($self, $ajifry_word) = @_;
-    my $chomped     = chomp($ajifry_word);
+    my ( $self, $ajifry_word ) = @_;
+    my $chomped = chomp($ajifry_word);
 
     unless ($ajifry_word) {
         return "\n" if $chomped;
@@ -100,7 +101,7 @@ sub to_Japanese {
 }
 
 sub translate_from_ajifry {
-    my ($self, $ajifry_word) = @_;
+    my ( $self, $ajifry_word ) = @_;
     return $self->to_Japanese($ajifry_word);
 }
 
@@ -139,27 +140,37 @@ sub _get_ajifry_word_by_consonant {
     my $self      = shift;
     my $consonant = shift;
 
-    if ($consonant eq 'a') {
+    if ( $consonant eq 'a' ) {
         return "食え";
-    } elsif ($consonant eq 'k') {
+    }
+    elsif ( $consonant eq 'k' ) {
         return "フライ";
-    } elsif ($consonant eq 's') {
+    }
+    elsif ( $consonant eq 's' ) {
         return "お刺身";
-    } elsif ($consonant eq 't') {
+    }
+    elsif ( $consonant eq 't' ) {
         return "アジ";
-    } elsif ($consonant eq 'n') {
+    }
+    elsif ( $consonant eq 'n' ) {
         return "ドボ";
-    } elsif ($consonant eq 'h') {
+    }
+    elsif ( $consonant eq 'h' ) {
         return "山岡";
-    } elsif ($consonant eq 'm') {
+    }
+    elsif ( $consonant eq 'm' ) {
         return "岡星";
-    } elsif ($consonant eq 'y') {
+    }
+    elsif ( $consonant eq 'y' ) {
         return "ゴク･･･";
-    } elsif ($consonant eq 'r') {
+    }
+    elsif ( $consonant eq 'r' ) {
         return "ああ";
-    } elsif ($consonant eq 'w') {
+    }
+    elsif ( $consonant eq 'w' ) {
         return "雄山";
-    } else {
+    }
+    else {
         return "";
     }
 }
@@ -168,19 +179,25 @@ sub _get_ajifry_word_by_vowel {
     my $self  = shift;
     my $vowel = shift;
 
-    if ($vowel eq 'a') {
+    if ( $vowel eq 'a' ) {
         return "食え食え";
-    } elsif ($vowel eq 'i') {
+    }
+    elsif ( $vowel eq 'i' ) {
         return "ドボドボ";
-    } elsif ($vowel eq 'u') {
+    }
+    elsif ( $vowel eq 'u' ) {
         return "お刺身";
-    } elsif ($vowel eq 'e') {
+    }
+    elsif ( $vowel eq 'e' ) {
         return "むむ･･･";
-    } elsif ($vowel eq 'o') {
+    }
+    elsif ( $vowel eq 'o' ) {
         return "アジフライ";
-    } elsif ($vowel eq 'n') {
+    }
+    elsif ( $vowel eq 'n' ) {
         return "京極";
-    } else {
+    }
+    else {
         return "";
     }
 }
@@ -189,27 +206,40 @@ sub _get_consonant_by_ajifry_word {
     my $self        = shift;
     my $ajifry_word = shift;
 
-    if ($ajifry_word eq '食え') {
+    if ( $ajifry_word eq '食え' ) {
         return 'a';
-    } elsif ($ajifry_word eq 'フライ') {
+    }
+    elsif ( $ajifry_word eq 'フライ' ) {
         return 'k';
-    } elsif ($ajifry_word eq 'お刺身') {
+    }
+    elsif ( $ajifry_word eq 'お刺身' ) {
         return 's';
-    } elsif ($ajifry_word eq 'アジ') {
+    }
+    elsif ( $ajifry_word eq 'アジ' ) {
         return 't';
-    } elsif ($ajifry_word eq 'ドボ') {
+    }
+    elsif ( $ajifry_word eq 'ドボ' ) {
         return 'n';
-    } elsif ($ajifry_word eq '山岡') {
+    }
+    elsif ( $ajifry_word eq '山岡' ) {
         return 'h';
-    } elsif ($ajifry_word eq '岡星') {
+    }
+    elsif ( $ajifry_word eq '岡星' ) {
         return 'm';
-    } elsif ($ajifry_word eq 'ゴク・・・' || $ajifry_word eq 'ゴク･･･' || $ajifry_word eq 'ゴク…') {
+    }
+    elsif ($ajifry_word eq 'ゴク・・・'
+        || $ajifry_word eq 'ゴク･･･'
+        || $ajifry_word eq 'ゴク…' )
+    {
         return 'y';
-    } elsif ($ajifry_word eq 'ああ') {
+    }
+    elsif ( $ajifry_word eq 'ああ' ) {
         return 'r';
-    } elsif ($ajifry_word eq '雄山') {
+    }
+    elsif ( $ajifry_word eq '雄山' ) {
         return 'w';
-    } else {
+    }
+    else {
         return;
     }
 }
@@ -218,17 +248,25 @@ sub _get_vowel_by_ajifry_word {
     my $self        = shift;
     my $ajifry_word = shift;
 
-    if ($ajifry_word eq '食え食え') {
+    if ( $ajifry_word eq '食え食え' ) {
         return 'a';
-    } elsif ($ajifry_word eq 'ドボドボ') {
+    }
+    elsif ( $ajifry_word eq 'ドボドボ' ) {
         return 'i';
-    } elsif ($ajifry_word eq 'お刺身') {
+    }
+    elsif ( $ajifry_word eq 'お刺身' ) {
         return 'u';
-    } elsif ($ajifry_word eq 'むむ・・・' || $ajifry_word eq 'むむ･･･' || $ajifry_word eq 'むむ…') {
+    }
+    elsif ($ajifry_word eq 'むむ・・・'
+        || $ajifry_word eq 'むむ･･･'
+        || $ajifry_word eq 'むむ…' )
+    {
         return 'e';
-    } elsif ($ajifry_word eq 'アジフライ') {
+    }
+    elsif ( $ajifry_word eq 'アジフライ' ) {
         return 'o';
-    } else {
+    }
+    else {
         return;
     }
 }
@@ -278,7 +316,9 @@ sub _to_Japanese {
         }
 
         my $consonant;
-        if ( $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ゴク･･･|ゴク…|ああ|雄山)// ) {
+        if ( $ajifry_word =~ s/^(食え|フライ|お刺身|アジ|ドボ|山岡|岡星|ゴク・・・|ゴク･･･|ゴク…|ああ|雄山)//
+          )
+        {
             $consonant = $1;
         }
         unless ($consonant) {
@@ -287,7 +327,9 @@ sub _to_Japanese {
             next;
         }
         my $vowel;
-        if ( $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|むむ･･･|むむ…|アジフライ)// ) {
+        if ( $ajifry_word =~ s/^(食え食え|ドボドボ|お刺身|むむ・・・|むむ･･･|むむ…|アジフライ)//
+          )
+        {
             $vowel = $1;
         }
         unless ($vowel) {
@@ -306,7 +348,8 @@ sub _to_Japanese {
         $vowel     = $self->_get_vowel_by_ajifry_word($vowel);
 
         my @match_characters =
-          $self->_find_duplicate_element_in_both_lists( ROWS->{$consonant}, COLS->{$vowel} );
+          $self->_find_duplicate_element_in_both_lists( ROWS->{$consonant},
+            COLS->{$vowel} );
         if ($is_p_sound) {
             $translated_word .= $match_characters[2];
         }

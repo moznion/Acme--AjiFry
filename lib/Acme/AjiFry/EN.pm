@@ -79,8 +79,8 @@ sub new {
 }
 
 sub to_AjiFry {
-    my ($self, $raw_string) = @_;
-    my $chomped    = chomp($raw_string);
+    my ( $self, $raw_string ) = @_;
+    my $chomped = chomp($raw_string);
 
     unless ($raw_string) {
         return "\n" if $chomped;
@@ -93,13 +93,13 @@ sub to_AjiFry {
 }
 
 sub translate_to_ajifry {
-    my ($self, $raw_string) = @_;
+    my ( $self, $raw_string ) = @_;
     return $self->to_AjiFry($raw_string);
 }
 
 sub to_English {
-    my ($self, $ajifry_word) = @_;
-    my $chomped     = chomp($ajifry_word);
+    my ( $self, $ajifry_word ) = @_;
+    my $chomped = chomp($ajifry_word);
 
     unless ($ajifry_word) {
         return "\n" if $chomped;
@@ -113,7 +113,7 @@ sub to_English {
 }
 
 sub translate_from_ajifry {
-    my ($self, $ajifry_word) = @_;
+    my ( $self, $ajifry_word ) = @_;
     return $self->to_English($ajifry_word);
 }
 
@@ -124,12 +124,14 @@ sub _to_ajifry {
     my @raw_chars = split //, $raw_string;
     my $ajifry_word;
     foreach my $raw_char (@raw_chars) {
-        if ($raw_char eq ' ') {
+        if ( $raw_char eq ' ' ) {
             $ajifry_word .= MAP->{space};
-        } elsif ($raw_char =~ /[a-zA-Z0-9]/) {
+        }
+        elsif ( $raw_char =~ /[a-zA-Z0-9]/ ) {
             $ajifry_word .= MAP->{$raw_char};
-        } else {
-                $ajifry_word .= $raw_char;
+        }
+        else {
+            $ajifry_word .= $raw_char;
         }
     }
 
