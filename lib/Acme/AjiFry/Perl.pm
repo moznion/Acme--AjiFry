@@ -67,6 +67,9 @@ This module rewrites a program of using this module.
 
 =item * Filter::Simple (version 0.84 or later)
 
+=back
+
+
 =head1 SEE ALSO
 
 L<Acme::AjiFry>.
