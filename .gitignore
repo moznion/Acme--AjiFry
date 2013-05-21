@@ -15,3 +15,10 @@ Acme-AjiFry-*
 Acme-AjiFry-*.tar.gz
 inc/
 _build/
+/Acme--AjiFry-*
+/.build
+/_build_params
+/Build
+!Build/
+!META.json
+!LICENSE
