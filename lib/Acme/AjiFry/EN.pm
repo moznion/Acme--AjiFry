@@ -3,7 +3,6 @@ package Acme::AjiFry::EN;
 use warnings;
 use strict;
 use utf8;
-use feature qw(switch);
 
 use Encode;
 use List::Util;
@@ -91,10 +90,12 @@ sub _to_ajifry {
     my @raw_chars = split //, $raw_string;
     my $ajifry_word;
     foreach my $raw_char (@raw_chars) {
-        given ($raw_char) {
-            when (' ')           { $ajifry_word .= $map{space} }
-            when (/[a-zA-Z0-9]/) { $ajifry_word .= $map{$raw_char} }
-            default              { $ajifry_word .= $raw_char }
+        if ($raw_char eq ' ') {
+            $ajifry_word .= $map{space};
+        } elsif ($raw_char =~ /[a-zA-Z0-9]/) {
+            $ajifry_word .= $map{$raw_char};
+        } else {
+                $ajifry_word .= $raw_char;
         }
     }
 
