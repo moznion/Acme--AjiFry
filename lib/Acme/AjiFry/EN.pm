@@ -4,7 +4,6 @@ use warnings;
 use strict;
 use utf8;
 use Encode;
-use List::Util;
 
 use constant MAP => {
     a => '食え食え食え',
@@ -76,8 +75,46 @@ use constant MAP => {
 
 sub new {
     my $class = shift;
-
     return $class;
+}
+
+sub to_AjiFry {
+    my ($self, $raw_string) = @_;
+    my $chomped    = chomp($raw_string);
+
+    unless ($raw_string) {
+        return "\n" if $chomped;
+        return '';
+    }
+
+    my $ajifry_word = $self->_to_ajifry($raw_string);
+    $ajifry_word .= "\n" if $chomped;
+    return encode_utf8($ajifry_word);
+}
+
+sub translate_to_ajifry {
+    my ($self, $raw_string) = @_;
+    return $self->to_AjiFry($raw_string);
+}
+
+sub to_English {
+    my ($self, $ajifry_word) = @_;
+    my $chomped     = chomp($ajifry_word);
+
+    unless ($ajifry_word) {
+        return "\n" if $chomped;
+        return '';
+    }
+
+    $ajifry_word = Encode::decode_utf8($ajifry_word);
+    my $translated_word = $self->_to_English($ajifry_word);
+    $translated_word .= "\n" if $chomped;
+    return $translated_word;
+}
+
+sub translate_from_ajifry {
+    my ($self, $ajifry_word) = @_;
+    return $self->to_English($ajifry_word);
 }
 
 sub _to_ajifry {
@@ -99,7 +136,7 @@ sub _to_ajifry {
     return $ajifry_word;
 }
 
-sub _from_ajifry {
+sub _to_English {
     my $self        = shift;
     my $ajifry_word = shift;
 
@@ -129,38 +166,6 @@ sub _from_ajifry {
 
     return $translated_word;
 }
-
-sub translate_to_ajifry {
-    my $self       = shift;
-    my $raw_string = shift;
-    my $chomped    = chomp($raw_string);
-
-    unless ($raw_string) {
-        return "\n" if $chomped;
-        return '';
-    }
-
-    my $ajifry_word = Encode::encode_utf8(
-        $self->_to_ajifry( Encode::decode_utf8($raw_string) ) );
-    $ajifry_word .= "\n" if $chomped;
-    return $ajifry_word;
-}
-
-sub translate_from_ajifry {
-    my $self        = shift;
-    my $ajifry_word = shift;
-    my $chomped     = chomp($ajifry_word);
-
-    unless ($ajifry_word) {
-        return "\n" if $chomped;
-        return '';
-    }
-
-    my $translated_word = Encode::encode_utf8(
-        $self->_from_ajifry( Encode::decode_utf8($ajifry_word) ) );
-    $translated_word .= "\n" if $chomped;
-    return $translated_word;
-}
 1;
 
 __END__
@@ -178,8 +183,8 @@ Acme::AjiFry::EN - AjiFry Language Translator for English
 
     my $ajifry_en = Acme::AjiFry::EN->new();
 
-    print $ajifry_en->translate_to_ajifry('012abcABC!!!')."\n"; # outputs => '京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!'
-    print $ajifry_en->translate_from_ajifry('京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!')."\n"; # outputs => '012abcABC!!!'
+    print $ajifry_en->to_AjiFry('012abcABC!!!')."\n"; # outputs => '京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!'
+    print $ajifry_en->to_English('京極お刺身京極むむ･･･京極アジフライ食え食え食え食えドボドボ食えお刺身山岡ドボドボ山岡お刺身山岡むむ･･･!!!')."\n"; # outputs => '012abcABC!!!'
 
 
 =head1 DESCRIPTION
@@ -201,12 +206,12 @@ L<Acme::AjiFry>.
 
 new is the constructor of this module.
 
-=item translate_from_ajifry
+=item to_English
 
 This function needs a AjiFry-Language string as parameter.
 It returns English which was translated from AjiFry-Language.
 
-=item translate_to_ajifry
+=item to_AjiFry
 
 This function needs a string as parameter.
 It returns AjiFry-Language which was translated from English.

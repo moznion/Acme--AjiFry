@@ -3,7 +3,6 @@ package Acme::AjiFry;
 use warnings;
 use strict;
 use utf8;
-
 use Encode;
 use List::Util;
 
@@ -63,6 +62,46 @@ use constant DOUBLE_CONSONANT => [ 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ', 'っ', '�
 sub new {
     my $class = shift;
     return $class;
+}
+
+sub to_AjiFry {
+    my ( $self, $raw_string ) = @_;
+
+    my $chomped = chomp($raw_string);
+    unless ($raw_string) {
+        return "\n" if $chomped;
+        return '';
+    }
+
+    $raw_string = decode_utf8($raw_string);
+    my $ajifry_word = $self->_to_ajifry($raw_string);
+    $ajifry_word .= "\n" if $chomped;
+    return encode_utf8($ajifry_word);
+}
+
+sub translate_to_ajifry {
+    my ($self, $raw_string) = @_;
+    return $self->to_AjiFry($raw_string);
+}
+
+sub to_Japanese {
+    my ($self, $ajifry_word) = @_;
+    my $chomped     = chomp($ajifry_word);
+
+    unless ($ajifry_word) {
+        return "\n" if $chomped;
+        return '';
+    }
+
+    $ajifry_word = decode_utf8($ajifry_word);
+    my $japanese_word = $self->_to_Japanese($ajifry_word);
+    $japanese_word .= "\n" if $chomped;
+    return encode_utf8($japanese_word);
+}
+
+sub translate_from_ajifry {
+    my ($self, $ajifry_word) = @_;
+    return $self->to_Japanese($ajifry_word);
 }
 
 sub _search_key_of_element {
@@ -219,7 +258,7 @@ sub _to_ajifry {
     return $ajifry_word;
 }
 
-sub _from_ajifry {
+sub _to_Japanese {
     my $self        = shift;
     my $ajifry_word = shift;
 
@@ -288,37 +327,6 @@ sub _from_ajifry {
     return $translated_word;
 }
 
-sub translate_to_ajifry {
-    my $self       = shift;
-    my $raw_string = shift;
-    my $chomped    = chomp($raw_string);
-
-    unless ($raw_string) {
-        return "\n" if $chomped;
-        return '';
-    }
-
-    my $ajifry_word = Encode::encode_utf8(
-        $self->_to_ajifry( Encode::decode_utf8($raw_string) ) );
-    $ajifry_word .= "\n" if $chomped;
-    return $ajifry_word;
-}
-
-sub translate_from_ajifry {
-    my $self        = shift;
-    my $ajifry_word = shift;
-    my $chomped     = chomp($ajifry_word);
-
-    unless ($ajifry_word) {
-        return "\n" if $chomped;
-        return '';
-    }
-
-    my $translated_word = Encode::encode_utf8(
-        $self->_from_ajifry( Encode::decode_utf8($ajifry_word) ) );
-    $translated_word .= "\n" if $chomped;
-    return $translated_word;
-}
 1;
 
 __END__
@@ -341,8 +349,8 @@ This document describes Acme::AjiFry version 0.08
 
     my $ajifry = Acme::AjiFry->new();
 
-    print $ajifry->translate_to_ajifry('おさしみ')."\n"; # outputs => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
-    print $ajifry->translate_from_ajifry('食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ')."\n"; # outputs => "おさしみ"
+    print $ajifry->to_AjiFry('おさしみ')."\n"; # outputs => "食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ"
+    print $ajifry->to_Japanese('食えアジフライお刺身食え食えお刺身ドボドボ岡星ドボドボ')."\n"; # outputs => "おさしみ"
 
 
 =head1 DESCRIPTION
@@ -360,12 +368,12 @@ L<http://ja.uncyclopedia.info/wiki/%E3%82%A2%E3%82%B8%E3%83%95%E3%83%A9%E3%82%A4
 
 new is the constructor of this module.
 
-=item translate_from_ajifry
+=item to_Japanese
 
 This function needs a AjiFry-Language string as parameter.
 It returns Japanese which was translated from AjiFry-Language.
 
-=item translate_to_ajifry
+=item to_AjiFry
 
 This function needs a string as parameter.
 It returns AjiFry-Language which was translated from Japanese.
@@ -374,9 +382,12 @@ It returns AjiFry-Language which was translated from Japanese.
 
 =head1 DEPENDENCIES
 
-Perl 5.10.0 or later.
+=over 4
 
-Class::Accessor::Fast 0.34 or later.
+=item * Encode (version 2.39 or later)
+
+=back
+
 
 =head1 BUGS AND LIMITATIONS
 
