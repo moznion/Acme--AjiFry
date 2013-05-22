@@ -2,7 +2,7 @@ Revision history for Acme-AjiFry
 
 {{$NEXT}}
 
-0.09 2013-05-22T04:19:39Z
+0.09 2013-05-22T04:20:41Z
        - Replace "smart-match" to "if-else" (for perl-5.18).
 
 0.08  Mon Jan 14 01:48:06 JST 2013
