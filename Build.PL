@@ -23,7 +23,7 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'Acme--AjiFry',
+    name            => 'Acme-AjiFry',
     module_name     => 'Acme::AjiFry',
     allow_pure_perl => 0,
 
