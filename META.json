@@ -4,7 +4,7 @@
       "moznion  C<< <moznion[at]gmail.com> >>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.4.3, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Minilla/v0.4.4, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -27,10 +27,10 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Cwd" : "0",
-            "File::Basename" : "2.77",
             "File::Compare" : "1.1005",
             "File::Copy" : "2.13",
+            "File::Spec::Functions" : "0",
+            "FindBin" : "0",
             "Test::More" : "0.98"
          }
       },
@@ -46,7 +46,7 @@
             "Test::CPAN::Meta" : "0",
             "Test::MinimumVersion" : "0.10108",
             "Test::Pod" : "1.41",
-            "Test::Spellunker" : "v0.2.2"
+            "Test::Spellunker" : "v0.2.7"
          }
       },
       "runtime" : {
