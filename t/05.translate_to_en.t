@@ -1,7 +1,6 @@
 #!perl
 
 use strict;
-use utf8;
 use Encode;
 
 use Acme::AjiFry::EN;
